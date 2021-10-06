@@ -1,0 +1,42 @@
+.offcanvas-body .nav-link {
+	border-bottom: 1px solid greenyellow;
+	padding: 5px;
+}
+
+.offcanvas-body .nav-link:hover {
+	background-color: darkolivegreen;
+}
+
+.bg-success .dropdown-item {
+	border-bottom: 1px solid greenyellow;
+	padding: 5px;
+}
+
+.bg-success .dropdown-item:hover {
+	background-color: darkolivegreen;
+}
+
+.noborder {
+	border: 0 !important;
+	padding-top: 0;
+	margin-left: 10px;
+}
+
+.my-icon {
+	position: absolute;
+	top: auto;
+	right: 40px;
+	opacity: 0.5;
+	z-index: 1;
+}
+
+a {
+	text-decoration: none;
+}
+
+.chat-me {
+	padding-left: 30%;
+}
+.chat-not-me {
+	padding-right: 30%;
+}

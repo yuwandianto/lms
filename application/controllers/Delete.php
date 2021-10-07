@@ -32,7 +32,29 @@ class Delete extends CI_Controller
         $id = $this->input->post('id');
         $this->db->where('id', $id);
         $this->db->delete('data_students');
-        
+    }
+
+    function teacher()
+    {
+        $id = $this->input->post('id');
+        $this->db->where('id', $id);
+        $this->db->delete('data_teachers');
+    }
+
+    function all_students()
+    {
+        $this->db->truncate('data_students');
+        $this->session->set_flashdata('tipe', 'success');
+        $this->session->set_flashdata('pesan', 'Data berhasil di hapus');
+        redirect('pageAdmin/student');
+    }
+
+    function all_teachers()
+    {
+        $this->db->truncate('data_teachers');
+        $this->session->set_flashdata('tipe', 'success');
+        $this->session->set_flashdata('pesan', 'Data berhasil di hapus');
+        redirect('pageAdmin/teacher');
     }
 }
 

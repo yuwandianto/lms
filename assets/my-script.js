@@ -157,9 +157,6 @@ $('.tombolSimpanUbahKelas').on('click', function(){
     })
 })
 
-// $('.select2').select2({
-//     dropdownParent: $('#tambahSiswa')
-// });
 
 $(document).ready(function() {
     $('.select2').select2({
@@ -238,4 +235,211 @@ $('#dataTablesSiswa').on('click', '.tombolHapusSiswa', function() {
         }
       })
 
+})
+
+$('.semuaDataSiswa').on('click', function() {
+    Swal.fire({
+        title: 'Konfirmasi Hapus data',
+        text: 'Yakin akan menghapus semua data siswa ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = baseURL+'delete/all_students'
+
+        }
+    })
+})
+
+$('#dataTablesSiswa').on('click', '.tombolUbahSiswa', function(){
+    const id = $(this).data('id')
+    
+    $.ajax({
+        url: baseURL + 'get/student',
+        type: 'post',
+        data: {id},
+        dataType: 'json',
+        success: function(data) {
+            $('#ubahDataSiswa').modal('show');
+            $("#formUbahDataSiswa [name='idUbahSiswa']").val(data[0]['id'])
+            $("#formUbahDataSiswa [name='ubahNamaSiswa']").val(data[0]['namaSiswa'])
+            $("#formUbahDataSiswa [name='ubahKodeKelas']").val(data[0]['kodeKelas'])
+            $("#formUbahDataSiswa [name='ubahnisn']").val(data[0]['nisn'])
+          
+        },
+        error: function(){
+            alert('error')
+        }
+    })
+})
+
+$('.tombolSimpanUbahSiswa').on('click', function(){
+    const namaSiswa = document.getElementById('ubahNamaSiswa').value
+    const kodeKelas = document.getElementById('ubahKodeKelas').value
+    const nisn = document.getElementById('ubahnisn').value
+    const id = document.getElementById('idUbahSiswa').value
+    
+    $.ajax({
+        url: baseURL + 'edit/student',
+        type: 'post',
+        data: {id,namaSiswa,kodeKelas,nisn},
+        success: function(data) {
+            Swal.fire(
+                'Data berhasil di diubah!',
+                '',
+                'success',
+            )
+            window.setTimeout(function() {
+                location.reload();
+            }, 1500);
+        },
+        error: function(e) {
+            console.log(e)
+        }
+    })
+})
+
+$('.tombolSimpanGuru').on('click', function() {
+    const namaGuru = document.getElementById('namaGuru').value
+    const nip = document.getElementById('nip').value
+    const email = document.getElementById('email').value
+    const password = document.getElementById('password').value
+    const hp = document.getElementById('hp').value
+
+    $.ajax({
+        url : baseURL + 'insert/teacher',
+        type: 'post',
+        data: {namaGuru,nip,email,password,hp},
+        success:function(data) {
+            if (data == 1) {
+                var toast = new bootstrap.Toast(simpanGuruSukses)
+                toast.show()
+            }
+
+            if(data == 0) {
+                Swal.fire(
+                    'Data gagal disimpan',
+                    'Email sudah digunakan',
+                    'error'
+                  )
+            }
+        },
+        error:function(e) {
+            console.log(e)
+        }
+    })
+})
+
+$('#tambahGuru').on('hidden.bs.modal', function(){
+    location.reload()
+})
+
+$('.semuaDataGuru').on('click', function() {
+    Swal.fire({
+        title: 'Konfirmasi Hapus data',
+        text: 'Yakin akan menghapus semua data guru ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = baseURL+'delete/all_teachers'
+        }
+    })
+})
+
+$('#dataTablesSiswa').on('click', '.tombolHapusGuru', function() {
+    const id = $(this).data('id')
+    const namaGuru = $(this).attr('tcName')
+
+    Swal.fire({
+        title: 'Apakah anda yakin menghapus data ' +namaGuru+ '?',
+        text: "",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Hapus !',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: baseURL + 'delete/teacher',
+                type: 'post',
+                data: {id},
+                success: function(data){
+                    Swal.fire(
+                        'Data berhasil dihapus!',
+                        '',
+                        'success'
+                      )
+                    
+                    window.setTimeout(function() {
+                        location.reload()
+                    }, 1000)
+                },
+                error: function() {
+
+                }
+            })
+        }
+      })
+
+})
+
+$('#dataTablesSiswa').on('click', '.tombolUbahGuru', function(){
+    const id = $(this).data('id')
+    
+    $.ajax({
+        url: baseURL + 'get/teacher',
+        type: 'post',
+        data: {id},
+        dataType: 'json',
+        success: function(data) {
+            $('#ubahDataGuru').modal('show');
+            $("#ubahDataGuru [name='idUbahGuru']").val(data[0]['id'])
+            $("#ubahDataGuru [name='ubahNamaGuru']").val(data[0]['namaGuru'])
+            $("#ubahDataGuru [name='ubahNipGuru']").val(data[0]['nip'])
+            $("#ubahDataGuru [name='ubahEmailGuru']").val(data[0]['email'])
+            $("#ubahDataGuru [name='ubahHpGuru']").val(data[0]['hp'])
+        },
+        error: function(){
+            alert('error')
+        }
+    })
+})
+
+$('.tombolSimpanUbahGuru').on('click', function(){
+    const namaGuru = document.getElementById('ubahNamaGuru').value
+    const nip = document.getElementById('ubahNipGuru').value
+    const password = document.getElementById('ubahPasswordGuru').value
+    const hp = document.getElementById('ubahHpGuru').value
+    const id = document.getElementById('idUbahGuru').value
+    
+    $.ajax({
+        url: baseURL + 'edit/teacher',
+        type: 'post',
+        data: {id,namaGuru,nip,password,hp},
+        success: function(data) {
+            Swal.fire(
+                'Data berhasil di diubah!',
+                '',
+                'success',
+            )
+            window.setTimeout(function() {
+                location.reload();
+            }, 1500);
+        },
+        error: function(e) {
+            console.log(e)
+        }
+    })
 })

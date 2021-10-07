@@ -20,17 +20,15 @@ $sub1 = $this->uri->segment(2);; ?>
                     </li>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle <?= ($sub1 == 'class' || $sub1 == 'student') ? 'text-white fw-bold' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle <?= ($sub1 == 'class' || $sub1 == 'student' || $sub1 == 'teacher' || $sub1 == 'subject') ? 'text-white fw-bold' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-cogs me-2"></i> Pengaturan
                             </a>
-                            <ul class="dropdown-menu bg-success noborder <?= ($sub1 == 'class' || $sub1 == 'student') ? 'show' : ''; ?>">
+                            <ul class="dropdown-menu bg-success noborder <?= ($sub1 == 'class' || $sub1 == 'student' || $sub1 == 'teacher' || $sub1 == 'subject') ? 'show' : ''; ?>">
                                 <li><a class="dropdown-item <?= ($sub1 == 'class') ? 'text-white fw-bold' : ''; ?>" href="<?= base_url('pageAdmin/class'); ?>"><i class="far fa-building me-2"></i> Kelas</a></li>
                                 <li><a class="dropdown-item <?= ($sub1 == 'student') ? 'text-white fw-bold' : ''; ?>" href="<?= base_url('pageAdmin/student'); ?>"><i class="fas fa-users me-2"></i> Siswa</a></li>
+                                <li><a class="dropdown-item <?= ($sub1 == 'teacher') ? 'text-white fw-bold' : ''; ?>" href="<?= base_url('pageAdmin/teacher'); ?>"><i class="fas fa-user-tie me-2"></i> Guru</a></li>
+                                <li><a class="dropdown-item <?= ($sub1 == 'subject') ? 'text-white fw-bold' : ''; ?>" href="<?= base_url('pageAdmin/subject'); ?>"><i class="fas fa-book me-2"></i> Mata Pelajaran</a></li>
 
-
-                                <li><a class="dropdown-item" href="#"> <i class="fas fa-users me-2"></i></i> Siswa</a></li>
-                                <li><a class="dropdown-item" href="#"> <i class="fas fa-user-tie me-2"></i> Guru</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-book me-2"></i> Mata Pelajaran</a></li>
                             </ul>
                         </li>
                     </ul>

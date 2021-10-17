@@ -71,6 +71,40 @@ class Edit extends CI_Controller
             $this->db->update('data_teachers', $data);
         }
     }
+
+    public function subject()
+    {
+        $id = $this->input->post('id');
+        $namaMapel = $this->input->post('namaMapel');
+        $kodeMapel = $this->input->post('kodeMapel');
+        $kelompok = $this->input->post('kelompok');
+
+
+        $data = [
+            'namaMapel' => $namaMapel,
+            'kodeMapel' => $kodeMapel,
+            'kelompok' => $kelompok
+        ];
+        $this->db->where('id', $id);
+        $this->db->update('data_subjects', $data);
+    }
+
+    public function timing()
+    {
+        $id = $this->input->post('id');
+        $jamKe = $this->input->post('jamKe');
+        $waktuMulai = $this->input->post('waktuMulai');
+        $waktuSelesai = $this->input->post('waktuSelesai');
+
+
+        $data = [
+            'jamKe' => $jamKe,
+            'waktuMulai' => $waktuMulai,
+            'waktuSelesai' => $waktuSelesai
+        ];
+        $this->db->where('id', $id);
+        $this->db->update('data_timing', $data);
+    }
 }
 
 /* End of file Edit.php */

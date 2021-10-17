@@ -51,11 +51,23 @@ class PageAdmin extends CI_Controller
 
     public function subject()
     {
-        $data['classes'] = $this->db->get('data_classes')->result();
+        $data['subjects'] = $this->db->get('data_subjects')->result();
+
 
         $this->load->view('admin/meta', $data);
         $this->load->view('admin/nav');
         $this->load->view('admin/subject');
+        $this->load->view('admin/footer');
+    }
+
+    public function timing()
+    {
+
+        $data['timing'] = $this->db->get('data_timing')->result();
+
+        $this->load->view('admin/meta', $data);
+        $this->load->view('admin/nav');
+        $this->load->view('admin/timing');
         $this->load->view('admin/footer');
     }
 
@@ -77,6 +89,20 @@ class PageAdmin extends CI_Controller
     {
         $this->load->helper('download');
         $data = './assets/format_import/guru.xlsx';
+        force_download($data, null);
+    }
+
+    function df_subject()
+    {
+        $this->load->helper('download');
+        $data = './assets/format_import/mapel.xlsx';
+        force_download($data, null);
+    }
+
+    function df_timing()
+    {
+        $this->load->helper('download');
+        $data = './assets/format_import/timing.xlsx';
         force_download($data, null);
     }
 }

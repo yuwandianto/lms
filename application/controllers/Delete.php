@@ -56,6 +56,36 @@ class Delete extends CI_Controller
         $this->session->set_flashdata('pesan', 'Data berhasil di hapus');
         redirect('pageAdmin/teacher');
     }
+
+    function all_subjects()
+    {
+        $this->db->truncate('data_subjects');
+        $this->session->set_flashdata('tipe', 'success');
+        $this->session->set_flashdata('pesan', 'Data berhasil di hapus');
+        redirect('pageAdmin/subject');
+    }
+
+    function subject()
+    {
+        $id = $this->input->post('id');
+        $this->db->where('id', $id);
+        $this->db->delete('data_subjects');
+    }
+
+    function all_timing()
+    {
+        $this->db->truncate('data_timing');
+        $this->session->set_flashdata('tipe', 'success');
+        $this->session->set_flashdata('pesan', 'Data berhasil di hapus');
+        redirect('pageAdmin/timing');
+    }
+
+    function timing()
+    {
+        $id = $this->input->post('id');
+        $this->db->where('id', $id);
+        $this->db->delete('data_timing');
+    }
 }
 
 /* End of file Delete.php */

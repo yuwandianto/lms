@@ -28,6 +28,22 @@ class Get extends CI_Controller
         $data = $this->db->get('data_teachers')->result();
         echo json_encode($data);
     }
+
+    function subject()
+    {
+        $id = $this->input->post('id');
+        $this->db->where('id', $id);
+        $data = $this->db->get('data_subjects')->result();
+        echo json_encode($data);
+    }
+
+    function timing()
+    {
+        $id = $this->input->post('id');
+        $this->db->where('id', $id);
+        $data = $this->db->get('data_timing')->result();
+        echo json_encode($data);
+    }
 }
 
 /* End of file Get.php */

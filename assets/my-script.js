@@ -10,6 +10,10 @@ $(document).ready(function() {
     } );
 } );
 
+$('#tambahMapel, #tambahJampel, #tambahGuru, #tambahSiswa, #tambahKelas').on('hidden.bs.modal', function() {
+    location.reload();
+})
+
 $('.tombolSimpanKelas').on('click', function() {
     const namaKelas = document.getElementById('namaKelas').value;
     const kodeKelas = document.getElementById('kodeKelas').value;
@@ -45,9 +49,6 @@ $('.tombolSimpanKelas').on('click', function() {
     })
 })
 
-$('#tambahKelas').on('hidden.bs.modal', function() {
-    location.reload();
-})
 
 $('.semuaDataKelas').on('click', function() {
     Swal.fire({
@@ -193,9 +194,6 @@ $('.tombolSimpanSiswa').on('click', function() {
     })
 })
 
-$('#tambahSiswa').on('hidden.bs.modal', function(){
-    location.reload()
-})
 
 $('#dataTablesSiswa').on('click', '.tombolHapusSiswa', function() {
     const id = $(this).data('id')
@@ -334,9 +332,6 @@ $('.tombolSimpanGuru').on('click', function() {
     })
 })
 
-$('#tambahGuru').on('hidden.bs.modal', function(){
-    location.reload()
-})
 
 $('.semuaDataGuru').on('click', function() {
     Swal.fire({
@@ -428,6 +423,288 @@ $('.tombolSimpanUbahGuru').on('click', function(){
         url: baseURL + 'edit/teacher',
         type: 'post',
         data: {id,namaGuru,nip,password,hp},
+        success: function(data) {
+            Swal.fire(
+                'Data berhasil di diubah!',
+                '',
+                'success',
+            )
+            window.setTimeout(function() {
+                location.reload();
+            }, 1500);
+        },
+        error: function(e) {
+            console.log(e)
+        }
+    })
+})
+
+$('.tombolSimpanMapel').on('click', function() {
+    const namaMapel = document.getElementById('namaMapel').value;
+    const kodeMapel = document.getElementById('kodeMapel').value;
+    const kelompok = document.getElementById('kelompok').value;
+
+    const toastLiveExample = document.getElementById('liveToast');
+    $.ajax({
+        type:'post',
+        url:baseURL+'insert/subject',
+        data:{namaMapel,kodeMapel,kelompok},
+        dataType: 'json',
+        success:function(data){
+   
+            if (data == 'success') {
+                // alert('sukses')
+                var toast = new bootstrap.Toast(toastLiveExample)
+
+                toast.show()
+            }
+
+            if (data == 'duplicated') {
+                Swal.fire(
+                    'Terjadi duplikasi kode mapel!',
+                    '',
+                    'error',
+                )
+            }
+        },
+        error:function(){
+            alert('error attemp')
+        }
+    })
+})
+
+
+
+$('.semuaDataMapel').on('click', function() {
+    Swal.fire({
+        title: 'Konfirmasi Hapus data',
+        text: 'Yakin akan menghapus semua data Mapel ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = baseURL+'delete/all_subjects'
+        }
+    })
+})
+
+$('#dataTables').on('click', ('.tombolHapusMapel'), function() {
+    const id = $(this).data('id');
+    const subName = $(this).attr('subName');
+    console.log(id)
+
+    Swal.fire({
+        title: 'Konfirmasi Hapus data',
+        text: 'Yakin akan menghapus data Mapel ' + subName + ' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: baseURL + 'delete/subject',
+                data: {
+                    id
+                },
+                type: 'post',
+                success: function(data) {
+                    Swal.fire(
+                        'Data berhasil di hapus!',
+                        '',
+                        'success',
+                    )
+                    window.setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function(e) {
+                    console.log(e)
+                }
+            })
+
+        }
+    })
+
+})
+
+$('#dataTables').on('click', '.tombolUbahMapel', function(){
+    const id = $(this).data('id')
+    
+    $.ajax({
+        url: baseURL + 'get/subject',
+        type: 'post',
+        data: {id},
+        dataType: 'json',
+        success: function(data) {
+            $('#ubahMapel').modal('show');
+            $("#ubahDataMapel [name='idUbahMapel']").val(data[0]['id'])
+            $("#ubahDataMapel [name='ubahNamaMapel']").val(data[0]['namaMapel'])
+            $("#ubahDataMapel [name='ubahKodeMapel']").val(data[0]['kodeMapel'])
+            $("#ubahDataMapel [name='ubahKelompok']").val(data[0]['kelompok'])
+        },
+        error: function(){
+            alert('error')
+        }
+    })
+})
+
+$('.tombolSimpanUbahMapel').on('click', function(){
+    const namaMapel = document.getElementById('ubahNamaMapel').value
+    const kodeMapel = document.getElementById('ubahKodeMapel').value
+    const kelompok = document.getElementById('ubahKelompok').value
+    const id = document.getElementById('idUbahMapel').value
+    
+    $.ajax({
+        url: baseURL + 'edit/subject',
+        type: 'post',
+        data: {id,namaMapel,kodeMapel,kelompok},
+        success: function(data) {
+            Swal.fire(
+                'Data berhasil di diubah!',
+                '',
+                'success',
+            )
+            window.setTimeout(function() {
+                location.reload();
+            }, 1500);
+        },
+        error: function(e) {
+            console.log(e)
+        }
+    })
+})
+
+$('.tombolSimpanJampel').on('click', function() {
+    const jamKe = document.getElementById('jamKe').value;
+    const waktuMulai = document.getElementById('waktuMulai').value;
+    const waktuSelesai = document.getElementById('waktuSelesai').value;
+
+    const toastLiveExample = document.getElementById('liveToast');
+    $.ajax({
+        type:'post',
+        url:baseURL+'insert/timing',
+        data:{jamKe,waktuMulai,waktuSelesai},
+        dataType: 'json',
+        success:function(data){
+   
+            if (data == 'success') {
+                // alert('sukses')
+                var toast = new bootstrap.Toast(toastLiveExample)
+
+                toast.show()
+            }
+
+            if (data == 'duplicated') {
+                Swal.fire(
+                    'Terjadi duplikasi jam pelajaran!',
+                    '',
+                    'error',
+                )
+            }
+        },
+        error:function(){
+            alert('error attemp')
+        }
+    })
+})
+
+$('.semuaDataJampel').on('click', function() {
+    Swal.fire({
+        title: 'Konfirmasi Hapus data',
+        text: 'Yakin akan menghapus semua data jam pelajaran ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = baseURL+'delete/all_timing'
+        }
+    })
+})
+
+$('#dataTablesSiswa').on('click', ('.tombolHapusJampel'), function() {
+    const id = $(this).data('id');
+    const timeName = $(this).attr('timeName');
+    console.log(id)
+
+    Swal.fire({
+        title: 'Konfirmasi Hapus data',
+        text: 'Yakin akan menghapus data jam pelajaran ke ' + timeName + ' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: baseURL + 'delete/timing',
+                data: {
+                    id
+                },
+                type: 'post',
+                success: function(data) {
+                    Swal.fire(
+                        'Data berhasil di hapus!',
+                        '',
+                        'success',
+                    )
+                    window.setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function(e) {
+                    console.log(e)
+                }
+            })
+
+        }
+    })
+
+})
+
+$('#dataTablesSiswa').on('click', '.tombolUbahKelas', function(){
+    const id = $(this).data('id')
+    
+    $.ajax({
+        url: baseURL + 'get/timing',
+        type: 'post',
+        data: {id},
+        dataType: 'json',
+        success: function(data) {
+            $('#ubahJampel').modal('show');
+            $("#ubahDataTiming [name='idUbahJampel']").val(data[0]['id'])
+            $("#ubahDataTiming [name='ubahjamKe']").val(data[0]['jamKe'])
+            $("#ubahDataTiming [name='ubahWaktuMulai']").val(data[0]['waktuMulai'])
+            $("#ubahDataTiming [name='ubahWaktuSelesai']").val(data[0]['waktuSelesai'])
+        },
+        error: function(){
+            alert('error')
+        }
+    })
+})
+
+$('.tombolSimpanUbahJampel').on('click', function(){
+    const jamKe = document.getElementById('ubahjamKe').value
+    const waktuMulai = document.getElementById('ubahWaktuMulai').value
+    const waktuSelesai = document.getElementById('ubahWaktuSelesai').value
+    const id = document.getElementById('idUbahJampel').value
+    
+    $.ajax({
+        url: baseURL + 'edit/timing',
+        type: 'post',
+        data: {id,jamKe,waktuMulai,waktuSelesai},
         success: function(data) {
             Swal.fire(
                 'Data berhasil di diubah!',

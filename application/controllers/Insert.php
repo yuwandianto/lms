@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-
-
 class Insert extends CI_Controller
 {
 
@@ -33,11 +31,11 @@ class Insert extends CI_Controller
     public function import_classes()
     {
 
-        $upload = $this->modelInsert->import_classes();
+        $upload = $this->modelInsert->import_excel();
 
-        if ($upload == 1) {
+        if ($upload['status'] == 1) {
 
-            $file = './assets/tmp_import/kelas.xlsx';
+            $file = './assets/tmp_import/' . $upload['upload_data']['file_name'];
 
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $spreadsheet = $reader->load($file);
@@ -66,7 +64,7 @@ class Insert extends CI_Controller
                     $this->db->insert('data_classes', $data);
                 }
             }
-            delete_files('.assets/tmp_import/');
+            delete_files('./assets/tmp_import/');
 
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil di import');
@@ -78,8 +76,6 @@ class Insert extends CI_Controller
             $this->session->set_flashdata('pesan', $upload);
             redirect('pageAdmin/class');
         }
-
-        // print_r($sheetData);
     }
 
     function student()
@@ -102,11 +98,11 @@ class Insert extends CI_Controller
     public function import_students()
     {
 
-        $upload = $this->modelInsert->import_classes();
+        $upload = $this->modelInsert->import_excel();
 
-        if ($upload == 1) {
+        if ($upload['status'] == 1) {
 
-            $file = './assets/tmp_import/siswa.xlsx';
+            $file = './assets/tmp_import/' . $upload['upload_data']['file_name'];
 
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $spreadsheet = $reader->load($file);
@@ -148,7 +144,7 @@ class Insert extends CI_Controller
                 }
             }
 
-            delete_files('.assets/tmp_import/');
+            delete_files('./assets/tmp_import/');
 
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil di import');
@@ -160,8 +156,6 @@ class Insert extends CI_Controller
             $this->session->set_flashdata('pesan', $upload);
             redirect('pageAdmin/student');
         }
-
-        // print_r($sheetData);
     }
 
     function teacher()
@@ -186,11 +180,11 @@ class Insert extends CI_Controller
     public function import_teachers()
     {
 
-        $upload = $this->modelInsert->import_teachers();
+        $upload = $this->modelInsert->import_excel();
 
-        if ($upload == 1) {
+        if ($upload['status'] == 1) {
 
-            $file = './assets/tmp_import/guru.xlsx';
+            $file = './assets/tmp_import/' . $upload['upload_data']['file_name'];
 
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             $spreadsheet = $reader->load($file);
@@ -222,7 +216,7 @@ class Insert extends CI_Controller
                 }
             }
 
-            delete_files('.assets/tmp_import/');
+            delete_files('./assets/tmp_import/');
 
             $this->session->set_flashdata('tipe', 'success');
             $this->session->set_flashdata('pesan', 'Data berhasil di import');
@@ -234,8 +228,142 @@ class Insert extends CI_Controller
             $this->session->set_flashdata('pesan', $upload);
             redirect('pageAdmin/teacher');
         }
+    }
 
-        // print_r($sheetData);
+    public function subject()
+    {
+        $namaMapel = $this->input->post('namaMapel');
+        $kodeMapel = $this->input->post('kodeMapel');
+        $kelompok = $this->input->post('kelompok');
+
+        $insert = $this->modelInsert->subject($namaMapel, $kodeMapel, $kelompok);
+
+        if ($insert == 1) {
+            # code...
+            echo json_encode('success');
+        } elseif ($insert == 0) {
+            echo json_encode('duplicated');
+        } else {
+            echo json_encode('error');
+        }
+    }
+
+    public function import_subjects()
+    {
+
+        $upload = $this->modelInsert->import_excel();
+
+        if ($upload['status'] == 1) {
+
+            $file = './assets/tmp_import/' . $upload['upload_data']['file_name'];
+
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            $spreadsheet = $reader->load($file);
+
+            $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+            for ($i = 1; $i < count($sheetData); $i++) {
+                # code...
+                $data = [
+                    'namaMapel' => $sheetData[$i][1],
+                    'kodeMapel' => $sheetData[$i][2],
+                    'kelompok' => $sheetData[$i][3],
+                ];
+
+                $this->db->where('kodeMapel', $sheetData[$i][2]);
+                $cek = $this->db->get('data_subjects');
+
+                if ($cek->num_rows() > 0) {
+                    $error = 'ada dupikasi data pada ' . $cek->row()->kodeMapel;
+                    delete_files('./assets/tmp_import/');
+
+                    $this->session->set_flashdata('tipe', 'error');
+                    $this->session->set_flashdata('pesan', $error);
+                    redirect('pageAdmin/subject');
+                } else {
+                    $this->db->insert('data_subjects', $data);
+                }
+            }
+            delete_files('./assets/tmp_import/');
+
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Data berhasil di import');
+            redirect('pageAdmin/subject');
+        } else {
+            delete_files('./assets/tmp_import/');
+
+            $this->session->set_flashdata('tipe', 'error');
+            $this->session->set_flashdata('pesan', $upload);
+            redirect('pageAdmin/subject');
+        }
+    }
+
+    public function timing()
+    {
+        $jamKe = $this->input->post('jamKe');
+        $waktuMulai = $this->input->post('waktuMulai');
+        $waktuSelesai = $this->input->post('waktuSelesai');
+
+        $insert = $this->modelInsert->timing($jamKe, $waktuMulai, $waktuSelesai);
+
+        if ($insert == 1) {
+            # code...
+            echo json_encode('success');
+        } elseif ($insert == 0) {
+            echo json_encode('duplicated');
+        } else {
+            echo json_encode('error');
+        }
+    }
+
+    public function import_timing()
+    {
+
+        $upload = $this->modelInsert->import_excel();
+
+        if ($upload['status'] == 1) {
+
+            $file = './assets/tmp_import/' . $upload['upload_data']['file_name'];
+
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            $spreadsheet = $reader->load($file);
+
+            $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+            for ($i = 1; $i < count($sheetData); $i++) {
+                # code...
+                $data = [
+                    'jamKe' => $sheetData[$i][1],
+                    'waktuMulai' => $sheetData[$i][2],
+                    'waktuSelesai' => $sheetData[$i][3],
+                ];
+
+                $this->db->where('jamKe', $sheetData[$i][1]);
+                $cek = $this->db->get('data_timing');
+
+                if ($cek->num_rows() > 0) {
+                    $error = 'ada dupikasi data pada jam ke ' . $cek->row()->jamKe;
+                    delete_files('./assets/tmp_import/');
+
+                    $this->session->set_flashdata('tipe', 'error');
+                    $this->session->set_flashdata('pesan', $error);
+                    redirect('pageAdmin/timing');
+                } else {
+                    $this->db->insert('data_timing', $data);
+                }
+            }
+            delete_files('./assets/tmp_import/');
+
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Data berhasil di import');
+            redirect('pageAdmin/timing');
+        } else {
+            delete_files('./assets/tmp_import/');
+
+            $this->session->set_flashdata('tipe', 'error');
+            $this->session->set_flashdata('pesan', $upload);
+            redirect('pageAdmin/timing');
+        }
     }
 }
 

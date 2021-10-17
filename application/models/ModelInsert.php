@@ -24,22 +24,6 @@ class ModelInsert extends CI_Model
         return 1;
     }
 
-    function import_classes()
-    {
-
-        $config['upload_path'] = './assets/tmp_import/';
-        $config['allowed_types'] = 'xlsx';
-        $config['max_size']  = '1000';
-
-        $this->load->library('upload', $config);
-
-        if (!$this->upload->do_upload('file')) {
-            return $this->upload->display_errors();
-        } else {
-            $data = array('upload_data' => $this->upload->data());
-            return 1;
-        }
-    }
 
     function student($namaSiswa, $kodeKelas, $nisn)
     {
@@ -88,7 +72,27 @@ class ModelInsert extends CI_Model
         }
     }
 
-    function import_teachers()
+    function subject($namaMapel, $kodeMapel, $kelompok)
+    {
+        $this->db->where('kodeMapel', $kodeMapel);
+        $cek = $this->db->get('data_subjects');
+
+        if ($cek->num_rows() > 0) {
+            return 0;
+        }
+
+        $data = [
+            'kodeMapel' => $kodeMapel,
+            'namaMapel' => $namaMapel,
+            'kelompok' => $kelompok,
+
+        ];
+
+        $insert = $this->db->insert('data_subjects', $data);
+        return 1;
+    }
+
+    function import_excel()
     {
 
         $config['upload_path'] = './assets/tmp_import/';
@@ -100,9 +104,29 @@ class ModelInsert extends CI_Model
         if (!$this->upload->do_upload('file')) {
             return $this->upload->display_errors();
         } else {
-            $data = array('upload_data' => $this->upload->data());
-            return 1;
+            $data = array('upload_data' => $this->upload->data(), 'status' => 1);
+            return $data;
         }
+    }
+
+    function timing($jamKe, $waktuMulai, $waktuSelesai)
+    {
+        $this->db->where('jamKe', $jamKe);
+        $cek = $this->db->get('data_timing');
+
+        if ($cek->num_rows() > 0) {
+            return 0;
+        }
+
+        $data = [
+            'jamKe' => $jamKe,
+            'waktuMulai' => $waktuMulai,
+            'waktuSelesai' => $waktuSelesai,
+
+        ];
+
+        $insert = $this->db->insert('data_timing', $data);
+        return 1;
     }
 }
 

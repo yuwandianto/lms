@@ -6,7 +6,16 @@ class PageAdmin extends CI_Controller
 
     public function index()
     {
-        $this->load->view('admin/meta');
+        is_admin();
+        $data['kelas'] = $this->db->get('data_classes')->num_rows();
+        $data['guru'] = $this->db->get('data_teachers')->num_rows();
+        $data['siswa'] = $this->db->get('data_students')->num_rows();
+        $data['mapel'] = $this->db->get('data_subjects')->num_rows();
+
+        $data['chats'] = $this->db->get('data_chats', 10)->result();
+
+
+        $this->load->view('admin/meta', $data);
         $this->load->view('admin/nav');
         $this->load->view('admin/dashboard');
         $this->load->view('admin/footer');
@@ -14,6 +23,7 @@ class PageAdmin extends CI_Controller
 
     public function class()
     {
+        is_admin();
         $data['classes'] = $this->db->get('data_classes')->result();
 
         $this->load->view('admin/meta', $data);
@@ -24,6 +34,7 @@ class PageAdmin extends CI_Controller
 
     public function student()
     {
+        is_admin();
         $this->db->select('*, data_students.id as ids');
         $this->db->join('data_classes', 'data_classes.kodeKelas = data_students.kodeKelas', 'left');
         $this->db->order_by('data_students.kodeKelas', 'asc');
@@ -41,6 +52,7 @@ class PageAdmin extends CI_Controller
 
     public function teacher()
     {
+        is_admin();
         $data['teachers'] = $this->db->get('data_teachers')->result();
 
         $this->load->view('admin/meta', $data);
@@ -51,8 +63,8 @@ class PageAdmin extends CI_Controller
 
     public function subject()
     {
+        is_admin();
         $data['subjects'] = $this->db->get('data_subjects')->result();
-
 
         $this->load->view('admin/meta', $data);
         $this->load->view('admin/nav');
@@ -62,7 +74,7 @@ class PageAdmin extends CI_Controller
 
     public function timing()
     {
-
+        is_admin();
         $data['timing'] = $this->db->get('data_timing')->result();
 
         $this->load->view('admin/meta', $data);
@@ -73,6 +85,7 @@ class PageAdmin extends CI_Controller
 
     function df_class()
     {
+        is_admin();
         $this->load->helper('download');
         $data = './assets/format_import/kelas.xlsx';
         force_download($data, null);
@@ -80,6 +93,7 @@ class PageAdmin extends CI_Controller
 
     function df_students()
     {
+        is_admin();
         $this->load->helper('download');
         $data = './assets/format_import/siswa.xlsx';
         force_download($data, null);
@@ -87,6 +101,7 @@ class PageAdmin extends CI_Controller
 
     function df_teacher()
     {
+        is_admin();
         $this->load->helper('download');
         $data = './assets/format_import/guru.xlsx';
         force_download($data, null);
@@ -94,6 +109,7 @@ class PageAdmin extends CI_Controller
 
     function df_subject()
     {
+        is_admin();
         $this->load->helper('download');
         $data = './assets/format_import/mapel.xlsx';
         force_download($data, null);
@@ -101,6 +117,7 @@ class PageAdmin extends CI_Controller
 
     function df_timing()
     {
+        is_admin();
         $this->load->helper('download');
         $data = './assets/format_import/timing.xlsx';
         force_download($data, null);

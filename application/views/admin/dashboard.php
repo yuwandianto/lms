@@ -12,7 +12,7 @@
                     </div>
                     <h5 class="card-title fw-bold">Kelas</h5>
                     <div class="display-5 fw-bold">
-                        22
+                        <?= $kelas; ?>
                     </div>
                     <a href="<?= base_url('pageAdmin/class'); ?>" class="text-white">Detail &raquo;</a>
                 </div>
@@ -24,9 +24,9 @@
                     </div>
                     <h5 class="card-title fw-bold">Siswa</h5>
                     <div class="display-5 fw-bold">
-                        600
+                        <?= $siswa; ?>
                     </div>
-                    <a href="#" class="text-white">Detail &raquo;</a>
+                    <a href="<?= base_url('pageAdmin/student'); ?>" class="text-white">Detail &raquo;</a>
                 </div>
             </div>
             <div class="card m-1 bg-warning bg-gradient" style="width: 19.5rem;">
@@ -36,9 +36,9 @@
                     </div>
                     <h5 class="card-title fw-bold">Guru</h5>
                     <div class="display-5 fw-bold">
-                        40
+                        <?= $guru; ?>
                     </div>
-                    <a href="#" class="text-white">Detail &raquo;</a>
+                    <a href="<?= base_url('pageAdmin/teacher'); ?>" class="text-white">Detail &raquo;</a>
                 </div>
             </div>
             <div class="card m-1 bg-danger bg-gradient" style="width: 19.5rem;">
@@ -48,9 +48,9 @@
                     </div>
                     <h5 class="card-title fw-bold">Mata Pelajaran</h5>
                     <div class="display-5 fw-bold">
-                        19
+                        <?= $mapel; ?>
                     </div>
-                    <a href="#" class="text-white">Detail &raquo;</a>
+                    <a href="<?= base_url('pageAdmin/subject'); ?>" class="text-white">Detail &raquo;</a>
                 </div>
             </div>
         </div>
@@ -98,53 +98,18 @@
                         <h5>Live Chat</h5>
                     </div>
                     <div class="card-body" style="overflow-y: auto; max-height: 400px;">
-                        <div class="row m-1 border-bottom chat-not-me">
-                            <h5 class="fw-bold">Administrator</h5>
-                            <p class="text-muted">
-                                Assalamualaikum,,
-                            </p>
-                        </div>
-
-                        <div class="row m-1 border-bottom chat-me">
-                            <h5 class="fw-bold">Saya</h5>
-                            <p class="text-muted">
-                                Waalaikumsalam
-                            </p>
-                        </div>
-
-                        <div class="row m-1 border-bottom chat-not-me">
-                            <h5 class="fw-bold">Administrator</h5>
-                            <p class="text-muted">
-                                Apa kabar hari ini?
-                            </p>
-                        </div>
-
-                        <div class="row m-1 border-bottom chat-me">
-                            <h5 class="fw-bold">Saya</h5>
-                            <p class="text-muted">
-                                Alhamdulillah sehat
-                            </p>
-                        </div>
-
-                        <div class="row m-1 border-bottom chat-me">
-                            <h5 class="fw-bold">Saya</h5>
-                            <p class="text-muted">
-                                Waalaikumsalam
-                            </p>
-                        </div>
-
-                        <div class="row m-1 border-bottom chat-not-me">
-                            <h5 class="fw-bold">Administrator</h5>
-                            <p class="text-muted">
-                                Apa kabar hari ini?
-                            </p>
-                        </div>
-
-
+                        <?php foreach ($chats as $chat) : ?>
+                            <div class="row m-1 border-bottom <?= ($chat->from_me == 0) ? 'chat-not-me' : 'chat-me'; ?> ">
+                                <h5 class="fw-bold"><?= $chat->user; ?></h5>
+                                <p class="text-muted">
+                                    <?= $chat->text_chat; ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
 
                     <div class="card-footer">
-                        <form action="">
+                        <form action="<?= base_url('insert/chat'); ?>" method="post">
                             <div class="input-group">
 
                                 <textarea name="text-chat" id="text-chat" class="form-control" rows="2"></textarea>

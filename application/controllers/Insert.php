@@ -365,6 +365,12 @@ class Insert extends CI_Controller
             redirect('pageAdmin/timing');
         }
     }
+
+    public function chat()
+    {
+        echo '<pre>';
+        print_r($_POST);
+    }
 }
 
 /* End of file Insert.php */

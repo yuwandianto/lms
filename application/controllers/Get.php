@@ -44,6 +44,14 @@ class Get extends CI_Controller
         $data = $this->db->get('data_timing')->result();
         echo json_encode($data);
     }
+
+    function scedule()
+    {
+        $id = $this->input->post('id');
+        $this->db->where('id', $id);
+        $data = $this->db->get('data_scedules')->result();
+        echo json_encode($data);
+    }
 }
 
 /* End of file Get.php */

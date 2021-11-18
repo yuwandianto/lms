@@ -128,6 +128,144 @@ class ModelInsert extends CI_Model
         $insert = $this->db->insert('data_timing', $data);
         return 1;
     }
+
+    function chat($text)
+    {
+        $email = $this->session->userdata('user');
+        $level = $this->session->userdata('level');
+
+        if ($level == 2) {
+            # code...
+            $user = $this->db->get_where('data_administrators', ['email' => $email])->row();
+            $object = [
+                'user' => $user->name,
+                'email' => $email,
+                'text_chat' => $text
+            ];
+
+            $insert = $this->db->insert('data_chats', $object);
+            if ($insert) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } elseif ($level == 1) {
+            $user = $this->db->get_where('data_teachers', ['email' => $email])->row();
+            $object = [
+                'user' => $user->namaGuru,
+                'email' => $email,
+                'text_chat' => $text
+            ];
+
+            $insert = $this->db->insert('data_chats', $object);
+            if ($insert) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    function scedule($id_class, $id_day, $id_end_timing, $id_start_timing, $id_subject, $id_teacher)
+    {
+        $data_start = $this->db->get_where('data_timing', ['id' => $id_start_timing])->row()->jamKe;
+        $data_end = $this->db->get_where('data_timing', ['id' => $id_end_timing])->row()->jamKe;
+
+        if ($data_start > $data_end) {
+
+            return 3;
+        }
+
+        $this->db->where('id_start_timing', $id_start_timing);
+        $this->db->where('id_teacher', $id_teacher);
+        $this->db->where('id_day', $id_day);
+        $cek = $this->db->get('data_scedules')->num_rows();
+
+        $this->db->where('id_end_timing', $id_start_timing);
+        $this->db->where('id_teacher', $id_teacher);
+        $this->db->where('id_day', $id_day);
+        $cek2 = $this->db->get('data_scedules')->num_rows();
+
+        $this->db->where('id_start_timing', $id_end_timing);
+        $this->db->where('id_teacher', $id_teacher);
+        $this->db->where('id_day', $id_day);
+        $cek3 = $this->db->get('data_scedules')->num_rows();
+
+        if ($cek || $cek2 || $cek3) {
+            return 2;
+        } else {
+            $object = [
+                'id_class' => $id_class,
+                'id_day' => $id_day,
+                'id_end_timing' => $id_end_timing,
+                'id_start_timing' => $id_start_timing,
+                'id_subject' => $id_subject,
+                'id_teacher' => $id_teacher
+            ];
+
+            $insert = $this->db->insert('data_scedules', $object);
+
+            if ($insert) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    function update_scedule($id, $id_class, $id_day, $id_end_timing, $id_start_timing, $id_subject, $id_teacher)
+    {
+        $data_start = $this->db->get_where('data_timing', ['id' => $id_start_timing])->row()->jamKe;
+        $data_end = $this->db->get_where('data_timing', ['id' => $id_end_timing])->row()->jamKe;
+
+        if ($data_start > $data_end) {
+            return 3;
+        }
+
+        $last = $this->db->get_where('data_scedules', ['id' => $id])->row();
+
+        $this->db->where('id_start_timing', $id_start_timing);
+        $this->db->where('id_teacher', $id_teacher);
+        $this->db->where('id_day', $id_day);
+        // $this->db->where_not_in('id', $id);
+        $cek = $this->db->get('data_scedules')->num_rows();
+
+        $this->db->where('id_end_timing', $id_start_timing);
+        $this->db->where('id_teacher', $id_teacher);
+        $this->db->where('id_day', $id_day);
+        // $this->db->where_not_in('id', $id);
+        $cek2 = $this->db->get('data_scedules')->num_rows();
+
+        $this->db->where('id_start_timing', $id_end_timing);
+        $this->db->where('id_teacher', $id_teacher);
+        $this->db->where('id_day', $id_day);
+        // $this->db->where_not_in('id', $id);
+        $cek3 = $this->db->get('data_scedules')->num_rows();
+
+        if ($cek || $cek2 || $cek3) {
+            return 2;
+        }
+
+        $object = [
+            'id_class' => $id_class,
+            'id_day' => $id_day,
+            'id_end_timing' => $id_end_timing,
+            'id_start_timing' => $id_start_timing,
+            'id_subject' => $id_subject,
+            'id_teacher' => $id_teacher
+        ];
+
+        $this->db->where('id', $id);
+        $update = $this->db->update('data_scedules', $object);
+
+        // $insert = $this->db->insert('data_scedules', $object);
+
+        if ($update) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
 
 /* End of file ModelInsert.php */

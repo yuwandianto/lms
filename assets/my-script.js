@@ -10,7 +10,7 @@ $(document).ready(function() {
     } );
 } );
 
-$('#tambahMapel, #tambahJampel, #tambahGuru, #tambahSiswa, #tambahKelas').on('hidden.bs.modal', function() {
+$('#tambahMapel, #tambahJampel, #tambahGuru, #tambahSiswa, #tambahKelas, #tambahJadwal').on('hidden.bs.modal', function() {
     location.reload();
 })
 
@@ -161,7 +161,7 @@ $('.tombolSimpanUbahKelas').on('click', function(){
 
 $(document).ready(function() {
     $('.select2').select2({
-        dropdownParent: $('#tambahSiswa')
+        dropdownParent: $('#tambahSiswa, #tambahJadwal')
     });
 });
 
@@ -714,6 +714,186 @@ $('.tombolSimpanUbahJampel').on('click', function(){
             window.setTimeout(function() {
                 location.reload();
             }, 1500);
+        },
+        error: function(e) {
+            console.log(e)
+        }
+    })
+})
+
+ $(document).ready(function(){
+    var myDiv = document.getElementById("div_chats");
+    myDiv.scrollTop = myDiv.scrollHeight;
+ });
+
+ $('.tombolSimpanJadwal').on('click', function() {
+    const id_teacher = document.getElementById('namaGuruSc').value;
+    const id_subject = document.getElementById('namaMapelSc').value;
+    const id_day = document.getElementById('hariSc').value;
+    const id_class = document.getElementById('kelasSc').value;
+    const id_start_timing = document.getElementById('jamMulaiSc').value;
+    const id_end_timing = document.getElementById('jamSelesaiSc').value;
+
+    const toastLiveExample = document.getElementById('liveToast');
+    $.ajax({
+        type:'post',
+        url:baseURL+'insert/scedule',
+        data:{id_teacher,id_subject,id_day,id_class,id_start_timing,id_end_timing },
+        dataType: 'json',
+        success:function(data){  
+            if (data == 'success') {
+                var toast = new bootstrap.Toast(liveToast)
+                toast.show()
+            }
+
+            if (data == 'duplicated') {
+                Swal.fire(
+                    'Terjadi duplikasi jadwal pelajaran!',
+                    '',
+                    'error',
+                )
+            }
+
+            if (data == 'err') {
+                Swal.fire(
+                    'Terjadi kesalahan input jam pelajaran!',
+                    '',
+                    'error',
+                )
+            }
+        },
+        error:function(){
+            alert('error attemp')
+        }
+    })
+})
+
+$('.semuaDataJadwal').on('click', function() {
+    Swal.fire({
+        title: 'Konfirmasi Hapus data',
+        text: 'Yakin akan menghapus semua data jadwal pelajaran ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = baseURL+'delete/all_scedules'
+        }
+    })
+})
+
+$('#dataTablesSiswa').on('click', ('.tombolHapusJadwal'), function() {
+    const id = $(this).data('id');
+    const scedName = $(this).attr('scedName');
+    console.log(id)
+
+    Swal.fire({
+        title: 'Konfirmasi Hapus data',
+        text: 'Hapus data jam pelajaran ' + scedName + ' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: baseURL + 'delete/scedule',
+                data: {
+                    id
+                },
+                type: 'post',
+                success: function(data) {
+                    Swal.fire(
+                        'Data berhasil di hapus!',
+                        '',
+                        'success',
+                    )
+                    window.setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function(e) {
+                    console.log(e)
+                }
+            })
+
+        }
+    })
+
+})
+
+$('#dataTablesSiswa').on('click', '.tombolUbahJadwal', function(){
+    const id = $(this).data('id')
+    
+    $.ajax({
+        url: baseURL + 'get/scedule',
+        type: 'post',
+        data: {id},
+        dataType: 'json',
+        success: function(data) {
+            $('#ubahJadwal').modal('show');
+            $("#ubahDataJadwal [name='idUbahJadwal']").val(data[0]['id'])
+            $("#ubahDataJadwal [name='ubahnamaGuruSc']").val(data[0]['id_teacher'])
+            $("#ubahDataJadwal [name='ubahnamaMapelSc']").val(data[0]['id_subject'])
+            $("#ubahDataJadwal [name='ubahhariSc']").val(data[0]['id_day'])
+            $("#ubahDataJadwal [name='ubahkelasSc']").val(data[0]['id_class'])
+            $("#ubahDataJadwal [name='ubahjamMulaiSc']").val(data[0]['id_start_timing'])
+            $("#ubahDataJadwal [name='ubahjamSelesaiSc']").val(data[0]['id_end_timing'])
+        },
+        error: function(){
+            alert('error')
+        }
+    })
+})
+
+$('.tombolSimpanUbahJadwal').on('click', function(){
+    const id = document.getElementById('idUbahJadwal').value
+    const id_teacher = document.getElementById('ubahnamaGuruSc').value;
+    const id_subject = document.getElementById('ubahnamaMapelSc').value;
+    const id_day = document.getElementById('ubahhariSc').value;
+    const id_class = document.getElementById('ubahkelasSc').value;
+    const id_start_timing = document.getElementById('ubahjamMulaiSc').value;
+    const id_end_timing = document.getElementById('ubahjamSelesaiSc').value;
+    
+    $.ajax({
+        url: baseURL + 'edit/scedule',
+        type: 'post',
+        dataType: 'json',
+        data: {id,id_teacher,id_subject,id_day,id_class,id_start_timing,id_end_timing},
+        success: function(data) {
+            console.log(data)
+            if (data == 'success') {
+                Swal.fire(
+                    'Data berhasil di diubah!',
+                    '',
+                    'success',
+                )
+                window.setTimeout(function() {
+                    location.reload();
+                }, 1500);
+            }
+
+            if (data == 'duplicated') {
+                Swal.fire(
+                    'Terjadi duplikasi jadwal pelajaran!',
+                    '',
+                    'error',
+                )
+            }
+
+            if (data == 'err') {
+                Swal.fire(
+                    'Terjadi kesalahan input jam pelajaran!',
+                    '',
+                    'error',
+                )
+            }
+
         },
         error: function(e) {
             console.log(e)

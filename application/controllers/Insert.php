@@ -366,10 +366,119 @@ class Insert extends CI_Controller
         }
     }
 
+    public function import_scedules()
+    {
+
+        $upload = $this->modelInsert->import_excel();
+
+        if ($upload['status'] == 1) {
+
+            $file = './assets/tmp_import/' . $upload['upload_data']['file_name'];
+
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            $spreadsheet = $reader->load($file);
+
+            $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+            for ($i = 1; $i < count($sheetData); $i++) {
+                # code...
+                $id_teacher = $this->db->get_where('data_teachers', ['email' => $sheetData[$i][1]])->row()->id;
+                $id_subject = $this->db->get_where('data_subjects', ['kodeMapel' => $sheetData[$i][2]])->row()->id;
+                $id_start_timing = $this->db->get_where('data_timing', ['jamKe' => $sheetData[$i][3]])->row()->id;
+                $id_end_timing = $this->db->get_where('data_timing', ['jamKe' => $sheetData[$i][4]])->row()->id;
+                $id_class = $this->db->get_where('data_classes', ['kodeKelas' => $sheetData[$i][5]])->row()->id;
+                $id_day = $this->db->get_where('data_days', ['dayName' => $sheetData[$i][6]])->row()->id;
+
+
+
+                $data = [
+                    'id_teacher' => $id_teacher,
+                    'id_subject' => $id_subject,
+                    'id_start_timing' => $id_start_timing,
+                    'id_end_timing' => $id_end_timing,
+                    'id_class' => $id_class,
+                    'id_day' => $id_day,
+                ];
+
+                $this->db->where('id_start_timing', $id_start_timing);
+                $this->db->where('id_teacher', $id_teacher);
+                $this->db->where('id_day', $id_day);
+                $cek = $this->db->get('data_scedules')->num_rows();
+
+                $this->db->where('id_end_timing', $id_start_timing);
+                $this->db->where('id_teacher', $id_teacher);
+                $this->db->where('id_day', $id_day);
+                $cek2 = $this->db->get('data_scedules')->num_rows();
+
+                $this->db->where('id_start_timing', $id_end_timing);
+                $this->db->where('id_teacher', $id_teacher);
+                $this->db->where('id_day', $id_day);
+                $cek3 = $this->db->get('data_scedules')->num_rows();
+
+                if (($cek > 0) || ($cek2 > 0) || ($cek3 > 0)) {
+                    $error = 'Terjadi bentrok data jadwal,, <br> silakan lakukan pengecekan pada baris ke - ' . $sheetData[$i][0];
+                    delete_files('./assets/tmp_import/');
+
+                    $this->session->set_flashdata('tipe', 'error');
+                    $this->session->set_flashdata('pesan', $error);
+                    redirect('pageAdmin/scedule');
+                } else {
+                    $this->db->insert('data_scedules', $data);
+                }
+            }
+            delete_files('./assets/tmp_import/');
+
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Data berhasil di import');
+            redirect('pageAdmin/scedule');
+        } else {
+            delete_files('./assets/tmp_import/');
+
+            $this->session->set_flashdata('tipe', 'error');
+            $this->session->set_flashdata('pesan', $upload);
+            redirect('pageAdmin/scedule');
+        }
+    }
+
     public function chat()
     {
-        echo '<pre>';
-        print_r($_POST);
+        $text = $this->input->post('text-chat', true);
+
+        $text = str_replace('
+', '<br>', $text);
+
+        $insert = $this->modelInsert->chat($text);
+
+
+        if ($insert == 1) {
+
+            redirect('pageAdmin');
+        } elseif ($insert == 0) {
+            redirect('pageAdmin');
+        }
+    }
+
+    function scedule()
+    {
+
+        $id_class = $this->input->post('id_class');
+        $id_day = $this->input->post('id_day');
+        $id_end_timing = $this->input->post('id_end_timing');
+        $id_start_timing = $this->input->post('id_start_timing');
+        $id_subject = $this->input->post('id_subject');
+        $id_teacher = $this->input->post('id_teacher');
+
+        $insert = $this->modelInsert->scedule($id_class, $id_day, $id_end_timing, $id_start_timing, $id_subject, $id_teacher);
+
+        if ($insert == 1) {
+            echo json_encode('success');
+        } elseif ($insert == 2) {
+            echo json_encode('duplicated');
+        } elseif ($insert == 3) {
+            echo json_encode('err');
+        } else {
+            echo json_encode('error');
+        }
     }
 }
 

@@ -40,3 +40,7 @@ a {
 .chat-not-me {
 	padding-right: 30%;
 }
+
+.select2 {
+	width: 100% !important;
+}

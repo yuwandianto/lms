@@ -86,6 +86,21 @@ class Delete extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('data_timing');
     }
+
+    function all_scedules()
+    {
+        $this->db->truncate('data_scedules');
+        $this->session->set_flashdata('tipe', 'success');
+        $this->session->set_flashdata('pesan', 'Data berhasil di hapus');
+        redirect('pageAdmin/scedule');
+    }
+
+    function scedule()
+    {
+        $id = $this->input->post('id');
+        $this->db->where('id', $id);
+        $this->db->delete('data_scedules');
+    }
 }
 
 /* End of file Delete.php */

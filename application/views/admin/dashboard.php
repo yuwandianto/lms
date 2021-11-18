@@ -1,4 +1,5 @@
 <!-- Awal Halaman -->
+
 <main class="pt-3">
     <div class="container mt-5">
         <h3 class="fw-bold">Dashboard</h3>
@@ -97,22 +98,23 @@
                     <div class="card-header">
                         <h5>Live Chat</h5>
                     </div>
-                    <div class="card-body" style="overflow-y: auto; max-height: 400px;">
+                    <div class="card-body" id="div_chats" style="overflow-y: auto; max-height: 400px;">
                         <?php foreach ($chats as $chat) : ?>
-                            <div class="row m-1 border-bottom <?= ($chat->from_me == 0) ? 'chat-not-me' : 'chat-me'; ?> ">
+                            <div class="row m-1 border-bottom <?= ($chat->email != $this->session->userdata('user')) ? 'chat-not-me' : 'chat-me'; ?> ">
                                 <h5 class="fw-bold"><?= $chat->user; ?></h5>
                                 <p class="text-muted">
                                     <?= $chat->text_chat; ?>
                                 </p>
                             </div>
                         <?php endforeach; ?>
+
                     </div>
 
                     <div class="card-footer">
                         <form action="<?= base_url('insert/chat'); ?>" method="post">
                             <div class="input-group">
 
-                                <textarea name="text-chat" id="text-chat" class="form-control" rows="2"></textarea>
+                                <textarea name="text-chat" id="text-chat" class="form-control" rows="2" required></textarea>
                                 <button type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2">Kirim</button>
                             </div>
                         </form>

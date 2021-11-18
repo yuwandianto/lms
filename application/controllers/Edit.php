@@ -105,6 +105,30 @@ class Edit extends CI_Controller
         $this->db->where('id', $id);
         $this->db->update('data_timing', $data);
     }
+
+    public function scedule()
+    {
+        $id = $this->input->post('id');
+        $id_class = $this->input->post('id_class');
+        $id_day = $this->input->post('id_day');
+        $id_end_timing = $this->input->post('id_end_timing');
+        $id_start_timing = $this->input->post('id_start_timing');
+        $id_subject = $this->input->post('id_subject');
+        $id_teacher = $this->input->post('id_teacher');
+
+        $this->load->model('modelInsert');
+        $update = $this->modelInsert->update_scedule($id, $id_class, $id_day, $id_end_timing, $id_start_timing, $id_subject, $id_teacher);
+
+        if ($update == 1) {
+            echo json_encode('success');
+        } elseif ($update == 2) {
+            echo json_encode('duplicated');
+        } elseif ($update == 3) {
+            echo json_encode('err');
+        } else {
+            echo json_encode('error');
+        }
+    }
 }
 
 /* End of file Edit.php */

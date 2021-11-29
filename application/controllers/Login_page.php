@@ -37,9 +37,11 @@ class Login_page extends CI_Controller
             redirect('pageAdmin', 'refresh');
         } elseif ($process == 3) {
             # wrong password
+            $this->session->set_flashdata('error_msg', 'Email atau password salah');
             redirect('login_page', 'refresh');
         } elseif ($process == 4) {
             # email not registered
+            $this->session->set_flashdata('error_msg', 'Email tidak terdaftar');
             redirect('login_page', 'refresh');
         }
     }

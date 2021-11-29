@@ -23,6 +23,37 @@
     </script>
 <?php endif; ?>
 
+<script>
+    $(document).ready(function() {
+        $('.dropdown-submenu a.test').on("click", function(e) {
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>
+
+<script>
+    var loadFile = function(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('output');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    };
+</script>
+
+<?php if ($this->session->flashdata('pesan')) : ?>
+    <script>
+        Swal.fire(
+            '<?= $this->session->flashdata('pesan'); ?>',
+            '',
+            '<?= $this->session->flashdata('tipe'); ?>',
+        )
+    </script>
+<?php endif; ?>
+
 </body>
 
 </html>

@@ -11,6 +11,8 @@ class PageAdmin extends CI_Controller
         $data['guru'] = $this->db->get('data_teachers')->num_rows();
         $data['siswa'] = $this->db->get('data_students')->num_rows();
         $data['mapel'] = $this->db->get('data_subjects')->num_rows();
+        $data['jampel'] = $this->db->get('data_timing')->num_rows();
+        $data['jadwal'] = $this->db->get('data_scedules')->num_rows();
 
         $row_chats = $this->db->get('data_chats')->num_rows();
         if ($row_chats > 29) {
@@ -22,10 +24,66 @@ class PageAdmin extends CI_Controller
 
         $data['chats'] = $this->db->get('data_chats', 30, $offset)->result();
 
+        $this->db->group_by('kodeKelas');
+        $data['kelas_data_siswa'] = $this->db->get('data_students')->num_rows();
+
+        $this->db->select('id_teacher');
+        $this->db->group_by('id_teacher');
+        $id_teacher = $this->db->get('data_scedules')->result();
+        // echo '<pre>';
+        $bentrok = [];
+        foreach ($id_teacher as $id_guru) {
+
+            $a = $this->db->query("SELECT
+            id_teacher,
+            id_start_timing,
+            id_day
+            FROM data_scedules
+            WHERE id_teacher = '$id_guru->id_teacher'
+            GROUP BY
+            id_teacher,
+            id_start_timing,
+            id_day
+            HAVING
+            COUNT(*) > 1")->result();
+
+            array_push($bentrok, $a);
+        }
+
+        $bent = '';
+        foreach ($bentrok as $b) {
+            if (count($b) > 0) {
+
+                $bent = $b;
+            }
+        }
+        // print_r($bent[0]->id_teacher);
+
+
+        if ($bent) {
+            $data['jadwal_bentrok'] = 1;
+            $this->db->select('namaGuru');
+            $this->db->join('data_teachers', 'data_teachers.id = data_scedules.id_teacher', 'left');
+            $data['guru_bentrok'] = $this->db->get_where('data_scedules', ['id_teacher' => $bent[0]->id_teacher])->row();
+        } else {
+            $data['jadwal_bentrok'] = 0;
+        }
+        // die;
 
         $this->load->view('admin/meta', $data);
         $this->load->view('admin/nav');
         $this->load->view('admin/dashboard');
+        $this->load->view('admin/footer');
+    }
+
+    public function instansi()
+    {
+        is_admin();
+        $data['instansi'] = $this->db->get('data_instansi')->row();
+
+        $this->load->view('admin/meta', $data);
+        $this->load->view('admin/nav');
+        $this->load->view('admin/instansi');
         $this->load->view('admin/footer');
     }
 
@@ -112,6 +170,17 @@ class PageAdmin extends CI_Controller
         $this->load->view('admin/meta', $data);
         $this->load->view('admin/nav');
         $this->load->view('admin/scedule');
+        $this->load->view('admin/footer');
+    }
+
+    public function tempST()
+    {
+        is_admin();
+        $data['template1'] = $this->db->get_where('data_templateSK', ['id' => 1])->row();
+
+        $this->load->view('admin/meta', $data);
+        $this->load->view('admin/nav');
+        $this->load->view('admin/tempST');
         $this->load->view('admin/footer');
     }
 

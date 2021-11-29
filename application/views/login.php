@@ -10,12 +10,18 @@
     <link rel="stylesheet" href="<?= base_url(); ?>assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>assets/fontawesome/css/all.css">
 
+    <style>
+        body {
+            background-image: url('<?= base_url(); ?>assets/images/background/dot-grid.png');
+        }
+    </style>
+
 </head>
 
 <body>
 
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh">
-        <div class="col-md-4 p-4 border border-primary border-2 rounded-3">
+        <div class="col-md-4 p-4 border border-primary border-2 rounded-3" style="background-color: aliceblue;">
             <h4 class="text-center mb-3">Login</h4>
             <form action="<?= base_url('login_page'); ?>" method="post">
                 <div class="mb-3">
@@ -58,30 +64,30 @@
 
 
 
-    <div class="position-fixed top-50 start-50 translate-middle" style="z-index: 11">
+    <div class="position-fixed top-50 start-50 translate-middle" style="z-index: 11;">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <img src="..." class="rounded me-2" alt="...">
-                <strong class="me-auto">Bootstrap</strong>
-                <small>11 mins ago</small>
+            <div class="toast-header bg-danger">
+
+                <strong class="me-auto">Login Error !</strong>
+
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                Hello, world! This is a toast message.
+                <?= ($this->session->flashdata('error_msg')) ? $this->session->flashdata('error_msg') : ''; ?>
             </div>
         </div>
     </div>
 
 
     <script src="<?= base_url(); ?>assets/bootstrap/js/bootstrap.min.js"></script>
+    <?php if ($this->session->flashdata('error_msg')) : ?>
+        <script>
+            var toastLiveExample = document.getElementById('liveToast')
+            var toast = new bootstrap.Toast(toastLiveExample)
 
-    <script>
-        var toastLiveExample = document.getElementById('liveToast')
-        var toast = new bootstrap.Toast(toastLiveExample)
-
-        toast.show()
-    </script>
-
+            toast.show()
+        </script>
+    <?php endif; ?>
 
 </body>
 

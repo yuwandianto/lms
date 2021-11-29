@@ -480,6 +480,38 @@ class Insert extends CI_Controller
             echo json_encode('error');
         }
     }
+
+    function templateSTsatu()
+    {
+        $nomor = $this->input->post('nomor');
+        $dasarSurat = $this->input->post('dasarSurat');
+        $nomorSurat = $this->input->post('nomorSurat');
+        $tanggalSurat = $this->input->post('tanggalSurat');
+        $perihal = $this->input->post('perihal');
+        $ditugaskan = $this->input->post('ditugaskan');
+        $hari = $this->input->post('hari');
+        $tanggal = $this->input->post('tanggal');
+        $waktu = $this->input->post('waktu');
+        $tempat = $this->input->post('tempat');
+
+        $data = [
+            'nomor' => $nomor,
+            'dasarSurat' => $dasarSurat,
+            'nomorSurat' => $nomorSurat,
+            'tanggalSurat' => $tanggalSurat,
+            'perihal' => $perihal,
+            'ditugaskan' => $ditugaskan,
+            'hari' => $hari,
+            'tanggal' => $tanggal,
+            'waktu' => $waktu,
+            'tempat' => $tempat,
+
+        ];
+        $this->db->where('id', 1);
+        $this->db->update('data_templateSK', $data);
+
+        redirect('pageAdmin/tempST', 'refresh');
+    }
 }
 
 /* End of file Insert.php */

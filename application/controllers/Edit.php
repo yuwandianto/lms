@@ -129,6 +129,49 @@ class Edit extends CI_Controller
             echo json_encode('error');
         }
     }
+
+    function instansi()
+    {
+        $namaSekolah = $this->input->post('namaSekolah', true);
+        $npsn = $this->input->post('npsn', true);
+        $alamat = $this->input->post('alamat', true);
+        $namaKepsek = $this->input->post('namaKepsek', true);
+        $tp = $this->input->post('tp', true);
+        $t_anggaran = $this->input->post('t_anggaran', true);
+
+        $this->load->model('modelInsert');
+        $ubah = $this->modelInsert->instansi($namaSekolah, $npsn, $alamat, $namaKepsek, $tp, $t_anggaran);
+
+        if ($ubah == 1) {
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Data berhasil diubah');
+            redirect('pageAdmin/instansi', 'refresh');
+        } else {
+            $this->session->set_flashdata('tipe', 'error');
+            $this->session->set_flashdata('pesan', 'Data gagal diubah');
+            redirect('pageAdmin/instansi', 'refresh');
+        }
+    }
+
+    function logo()
+    {
+        $this->load->model('modelInsert');
+        $ubah = $this->modelInsert->logo();
+
+        if ($ubah == 1) {
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Logo berhasil diubah');
+            redirect('pageAdmin/instansi', 'refresh');
+        } elseif ($ubah == 2) {
+            $this->session->set_flashdata('tipe', 'error');
+            $this->session->set_flashdata('pesan', 'Logo gagal diubah');
+            redirect('pageAdmin/instansi', 'refresh');
+        } else {
+            $this->session->set_flashdata('tipe', 'error');
+            $this->session->set_flashdata('pesan', $ubah);
+            redirect('pageAdmin/instansi', 'refresh');
+        }
+    }
 }
 
 /* End of file Edit.php */

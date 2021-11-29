@@ -266,6 +266,56 @@ class ModelInsert extends CI_Model
             return 0;
         }
     }
+
+    function instansi($namaSekolah, $npsn, $alamat, $namaKepsek, $tp, $t_anggaran)
+    {
+        $id = 1;
+        $data = [
+            'namaSekolah' => $namaSekolah,
+            'npsn' => $npsn,
+            'alamat' => $alamat,
+            'namaKepsek' => $namaKepsek,
+            'tp' => $tp,
+            't_anggaran' => $t_anggaran,
+        ];
+        $this->db->where('id', $id);
+        $ubah = $this->db->update('data_instansi', $data);
+
+        if ($ubah) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    function logo()
+    {
+
+        $config['upload_path'] = './assets/images/logo';
+        $config['allowed_types'] = 'gif|jpg|png|GIF|JPG|PNG';
+        $config['max_size']  = '5000';
+        $config['min_size']  = '20';
+        $config['encrypt_name'] = true;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('file')) {
+            $error = $this->upload->display_errors();
+            return $error;
+        } else {
+            $data = array('upload_data' => $this->upload->data());
+            echo "success";
+            $object = [
+                'logoSekolah' => $this->upload->data('file_name'),
+            ];
+            $this->db->where('id', 1);
+            $ubah_nama = $this->db->update('data_instansi', $object);
+            if ($ubah_nama) {
+                return 1;
+            }
+            return 0;
+        }
+    }
 }
 
 /* End of file ModelInsert.php */

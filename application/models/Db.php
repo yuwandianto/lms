@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 18, 2021 at 05:10 PM
+-- Generation Time: Nov 29, 2021 at 10:54 PM
 -- Server version: 10.3.31-MariaDB-0+deb10u1
 -- PHP Version: 7.3.31-1~deb10u1
 
@@ -151,6 +151,30 @@ INSERT INTO `data_days` (`id`, `dayName`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `data_instansi`
+--
+
+CREATE TABLE `data_instansi` (
+`id` int(11) NOT NULL,
+`namaSekolah` varchar(40) NOT NULL,
+`npsn` varchar(10) NOT NULL,
+`alamat` text NOT NULL,
+`namaKepsek` varchar(40) NOT NULL,
+`tp` varchar(20) NOT NULL,
+`t_anggaran` varchar(4) NOT NULL,
+`logoSekolah` varchar(70) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `data_instansi`
+--
+
+INSERT INTO `data_instansi` (`id`, `namaSekolah`, `npsn`, `alamat`, `namaKepsek`, `tp`, `t_anggaran`, `logoSekolah`) VALUES
+(1, 'SMAN 1 Jorong', '30300700', 'Jl A Yani Km 96 Jorong 70882', 'Haryadi, S.Pd', '2021/2022', '2022', '5451f3af57e878af5a848a554189164f.gif');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `data_logs_login`
 --
 
@@ -183,16 +207,16 @@ CREATE TABLE `data_scedules` (
 --
 
 INSERT INTO `data_scedules` (`id`, `id_teacher`, `id_subject`, `id_start_timing`, `id_end_timing`, `id_class`, `id_day`, `created_at`, `updated_at`) VALUES
-(1, '1', '1', '1', '1', '1', '1', '2021-11-18 09:10:26', '0000-00-00 00:00:00'),
-(2, '1', '1', '2', '3', '2', '2', '2021-11-18 09:10:26', '0000-00-00 00:00:00'),
-(3, '1', '1', '4', '4', '3', '3', '2021-11-18 09:10:26', '0000-00-00 00:00:00'),
-(4, '1', '1', '5', '6', '4', '4', '2021-11-18 09:10:26', '0000-00-00 00:00:00'),
-(5, '1', '1', '6', '6', '5', '5', '2021-11-18 09:10:26', '0000-00-00 00:00:00'),
-(6, '1', '1', '1', '1', '6', '5', '2021-11-18 09:10:26', '0000-00-00 00:00:00'),
-(7, '1', '1', '2', '3', '7', '4', '2021-11-18 09:10:26', '0000-00-00 00:00:00'),
-(8, '1', '1', '7', '7', '8', '3', '2021-11-18 09:10:26', '0000-00-00 00:00:00'),
-(9, '1', '1', '5', '6', '9', '2', '2021-11-18 09:10:26', '0000-00-00 00:00:00'),
-(10, '1', '1', '6', '6', '10', '1', '2021-11-18 09:10:26', '0000-00-00 00:00:00');
+(1, '1', '1', '1', '1', '1', '1', '2021-11-19 02:57:03', '0000-00-00 00:00:00'),
+(2, '1', '1', '2', '3', '2', '2', '2021-11-19 02:57:03', '0000-00-00 00:00:00'),
+(3, '1', '1', '4', '4', '3', '3', '2021-11-19 02:57:03', '0000-00-00 00:00:00'),
+(4, '1', '1', '5', '6', '4', '4', '2021-11-19 02:57:03', '0000-00-00 00:00:00'),
+(5, '1', '1', '6', '6', '5', '5', '2021-11-19 02:57:03', '0000-00-00 00:00:00'),
+(6, '1', '1', '1', '1', '6', '5', '2021-11-19 02:57:03', '0000-00-00 00:00:00'),
+(7, '1', '1', '2', '3', '7', '4', '2021-11-19 02:57:03', '0000-00-00 00:00:00'),
+(8, '1', '1', '7', '7', '8', '3', '2021-11-19 02:57:03', '0000-00-00 00:00:00'),
+(9, '1', '1', '5', '6', '9', '2', '2021-11-19 02:57:03', '0000-00-00 00:00:00'),
+(10, '1', '1', '6', '6', '10', '1', '2021-11-19 02:57:03', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -972,56 +996,104 @@ CREATE TABLE `data_teachers` (
 --
 
 INSERT INTO `data_teachers` (`id`, `namaGuru`, `nip`, `email`, `password`, `hp`, `picture`, `created_at`, `updated_at`) VALUES
-(1, 'Guru 1', '0000000001', 'guru1@gmail.com', '$2y$10$yzAUm6NpkHAZ/byYABtoK.pYIuoYjMb3bdQzZfah7Q4lCnkNJOZeC', '08213481185', '', '2021-10-08 08:19:39', '2021-10-08 08:19:39'),
-(2, 'Guru 2', '0000000002', 'guru2@gmail.com', '$2y$10$G8wObwk53B9EoZvctBN04.f4IAi95lzqZChXDKG2.1IgOZfDHuINu', '08213493928', '', '2021-10-08 08:19:39', '2021-10-08 08:19:39'),
-(3, 'Guru 3', '0000000003', 'guru3@gmail.com', '$2y$10$AmEFZ5ZqD8SODVxe7J/zq.s1vCp/jbZFoZUZHxJFU/YJn67CpeabK', '08213457228', '', '2021-10-08 08:19:39', '2021-10-08 08:19:39'),
-(4, 'Guru 4', '0000000004', 'guru4@gmail.com', '$2y$10$9eKyrAeL0LesT2os6ZBIweSxrvESQFpkKVQ2LENjNDv.VX8F8AEwO', '08213417052', '', '2021-10-08 08:19:39', '2021-10-08 08:19:39'),
-(5, 'Guru 5', '0000000005', 'guru5@gmail.com', '$2y$10$wUx7s.AH17jcCUHgWvwBUudFkC8llX2zFXWdmU28IzJxPeUYdvWtS', '08213489808', '', '2021-10-08 08:19:39', '2021-10-08 08:19:39'),
-(6, 'Guru 6', '0000000006', 'guru6@gmail.com', '$2y$10$s3TY950nDP/Hp8oP4jv.u.WUXYwmEC94eeAGP1rvYNClx/jju9ppK', '08213482440', '', '2021-10-08 08:19:39', '2021-10-08 08:19:39'),
-(7, 'Guru 7', '0000000007', 'guru7@gmail.com', '$2y$10$Nh91TXKRH1ESNzBP2em0Qe1TVNbqLdVA61/ezhXMLAZ125RtYjH6K', '08213494540', '', '2021-10-08 08:19:39', '2021-10-08 08:19:39'),
-(8, 'Guru 8', '0000000008', 'guru8@gmail.com', '$2y$10$ejpX9zfUhEMzSnmQbAqete0sANq/nTkbbZvHYsWVyDttejGVrG3wi', '08213426433', '', '2021-10-08 08:19:39', '2021-10-08 08:19:39'),
-(9, 'Guru 9', '0000000009', 'guru9@gmail.com', '$2y$10$cGQEO59pF.KLaXlUv.8c7uPBpejoE2QLtAkupGN1rpmLRjMOy3fUW', '08213415535', '', '2021-10-08 08:19:39', '2021-10-08 08:19:39'),
-(10, 'Guru 10', '0000000010', 'guru10@gmail.com', '$2y$10$Znh2IM9gPa7GmY.nFhQGJu90gWJ7oZZjQ4T9C3xQUB9rfMisVHL/G', '08213441090', '', '2021-10-08 08:19:39', '2021-10-08 08:19:39'),
-(11, 'Guru 11', '0000000011', 'guru11@gmail.com', '$2y$10$ZOZuJ4Bzl27r3YUt8FKxSeFdqLnJZXVaJJLQ78Mln7ofN8cgZVZ9O', '08213411243', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(12, 'Guru 12', '0000000012', 'guru12@gmail.com', '$2y$10$Xdo71mpcCJhZqzEDBNMp0eXFEFR0.KWFVFQ/9WK7MM2JBpp/gbnyi', '08213463243', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(13, 'Guru 13', '0000000013', 'guru13@gmail.com', '$2y$10$oLCS/PVWprFpKPrPGOxjlOdNygB3zyURf1ppQdKRkKK7I2ARsRNZO', '08213413878', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(14, 'Guru 14', '0000000014', 'guru14@gmail.com', '$2y$10$QqQh.o9VEpe5XbZe/Hv.DOGuGq/XrLhOtreTSU1RkVD6QR/IUVYD6', '08213446313', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(15, 'Guru 15', '0000000015', 'guru15@gmail.com', '$2y$10$gswAncJam0S5NuJtVfq18OGaEgUuWiSU/qdBwIgRYBmf7MAF1b6XG', '08213496980', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(16, 'Guru 16', '0000000016', 'guru16@gmail.com', '$2y$10$c.RhztednDu2U1KhqrVleek8r1Hb4MVaNwl00ZsCI.Q2tIgQh62AW', '08213438831', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(17, 'Guru 17', '0000000017', 'guru17@gmail.com', '$2y$10$Z5fEjeG/SIf5bKT8VebMFu4dBahzaHmVTApW9wNUJj7NO/Qm.1zqS', '08213497802', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(18, 'Guru 18', '0000000018', 'guru18@gmail.com', '$2y$10$03Oaa6vN.psPehNDiwexeO8z66wok1621K45Uz8bMvJWc4BsoUSNC', '08213427914', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(19, 'Guru 19', '0000000019', 'guru19@gmail.com', '$2y$10$2XxJhnNIQV1zX6HbNL6U7ub1HNs..hEz07LJ8je3U/tw.HxaBdb5W', '08213436251', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(20, 'Guru 20', '0000000020', 'guru20@gmail.com', '$2y$10$GINvFlwcjb/DNJPrKfYwNuMWJrW0aDKUWwrRO.cJGiXq90p//M7jC', '08213445136', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(21, 'Guru 21', '0000000021', 'guru21@gmail.com', '$2y$10$PZtraZhasGYbfGm6Fk9hX.8YWTJUEPHsqmbh8CEZ8v4Da3RjBE9yC', '08213462574', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(22, 'Guru 22', '0000000022', 'guru22@gmail.com', '$2y$10$eUc1I9e7SF0mj5yvMV3sBegaUgfOw5QcjhqWo7q6DtMakEQ4fHX9.', '08213444769', '', '2021-10-08 08:19:40', '2021-10-08 08:19:40'),
-(23, 'Guru 23', '0000000023', 'guru23@gmail.com', '$2y$10$7GgRkyHJfGTe8lfZoeYipOHyxWqGxOdNO9hH2k71LG8soSmR85It.', '08213430448', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(24, 'Guru 24', '0000000024', 'guru24@gmail.com', '$2y$10$RCguuAY5tWY/F41xpGWgT.nZI9KAo1tZyWApKuHaXzTcSfD0FDB06', '08213463177', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(25, 'Guru 25', '0000000025', 'guru25@gmail.com', '$2y$10$pBbx7ADMXfZpdxiNzL4th.O8Y7NZQkwm/RrrvfdLEG.FIDmqXNmJy', '08213437947', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(26, 'Guru 26', '0000000026', 'guru26@gmail.com', '$2y$10$xlaFcXnYWiQzarfR0UIzQuVZYKXihrv2cgtdoQNVyMB8ocI0qqc9W', '08213453183', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(27, 'Guru 27', '0000000027', 'guru27@gmail.com', '$2y$10$tVmSOPIBxxoHBLw3GYz5ourCqdFHWDW1KQxwgFQUi61EDTb06hl.K', '08213428966', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(28, 'Guru 28', '0000000028', 'guru28@gmail.com', '$2y$10$irv44kb2I0LREAF2WAQFWONz0TjfgK0wGz9Wge1SeOAQQDUqTetlW', '08213492208', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(29, 'Guru 29', '0000000029', 'guru29@gmail.com', '$2y$10$Z3HTbyxhJ9rDwRHB2DEALuiObOjenVtWJNQwi.Q/E7R0qOrU/xbg.', '08213432311', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(30, 'Guru 30', '0000000030', 'guru30@gmail.com', '$2y$10$N.lQfmJ1iLECsfwOwhhJOeDH0nXsaYDCl3nQ9UP61UIA8FmZjSyny', '08213430268', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(31, 'Guru 31', '0000000031', 'guru31@gmail.com', '$2y$10$YHtw1ZeWs4V0eY.RLeYFNOwPWIagMhoqD5Ikov/zlmnaU8hr7.bTK', '08213449974', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(32, 'Guru 32', '0000000032', 'guru32@gmail.com', '$2y$10$HYtEUs5A4IQrANAeXYp.vuQpPw/CX/3FWGwtl0yCYPOEz5mY32bMa', '08213426968', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(33, 'Guru 33', '0000000033', 'guru33@gmail.com', '$2y$10$l5YQK6uETD388wT67OpkneBbQW2Gh/1mQqNb.s83UapFkUSFaNBPO', '08213452280', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(34, 'Guru 34', '0000000034', 'guru34@gmail.com', '$2y$10$N189P5yj14jcxP.3UMX4NecZlJXYP4q3XxzM3jJfhGODAvF5j7GJu', '08213491300', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(35, 'Guru 35', '0000000035', 'guru35@gmail.com', '$2y$10$SZeVncEcwksgIXdktSN50.lg.LDoPFJaQJMN.Mr7V0XwuZZL4hgty', '08213421050', '', '2021-10-08 08:19:41', '2021-10-08 08:19:41'),
-(36, 'Guru 36', '0000000036', 'guru36@gmail.com', '$2y$10$dnSL86.5dK3MJ.7j9k0IX.WDTbvOGM8d0/JLLR6DU.4rPeL4tpH2W', '08213450804', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(37, 'Guru 37', '0000000037', 'guru37@gmail.com', '$2y$10$N1/j/gy2ozsphYonmV3Ah.uLnp7AA178F5lrQgNh/cH6B5D3m2YS2', '08213458978', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(38, 'Guru 38', '0000000038', 'guru38@gmail.com', '$2y$10$vOMQ0yIhC0j6Oi2kvqp3reZGpmSmmfpR3AQXwzv5vqUk3AtXizYaO', '08213478460', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(39, 'Guru 39', '0000000039', 'guru39@gmail.com', '$2y$10$5KunU14HDx5ngYHeQpOS3egpqArqbSKxPy29oLar7pe4XBaA9JN.6', '08213462403', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(40, 'Guru 40', '0000000040', 'guru40@gmail.com', '$2y$10$rkfwFYCkcznnvOG9q88XLua0wTMCwYJ1NMvcnqlB7q8xVWbEqSMRK', '08213432858', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(41, 'Guru 41', '0000000041', 'guru41@gmail.com', '$2y$10$slDDK2OZ.8b6nNHocA3dSupyCkQeh2DDx40QYaKUinDz0iU7ZRc8y', '08213481019', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(42, 'Guru 42', '0000000042', 'guru42@gmail.com', '$2y$10$78i5Y956.tgDLk4VKTL3He8P5z1UcmOiR2q7q.FFhAkj83rrS8CPy', '08213460559', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(43, 'Guru 43', '0000000043', 'guru43@gmail.com', '$2y$10$MWKwDDiFgqFmtihJNr3LnuWH9mNAikV5k/.kEvaTRszTD/aXGwZLe', '08213459205', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(44, 'Guru 44', '0000000044', 'guru44@gmail.com', '$2y$10$5mR8uaAMmk5cx8I10ZjF0e1.o9bqjnJB/mzz8Je0K5LWmhIVhZv5S', '08213456773', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(45, 'Guru 45', '0000000045', 'guru45@gmail.com', '$2y$10$CNCGXQh/vaNmM4F0.ht5u.Q4iyvwJYVO95SFXRx9Hu2mhouFtgMzW', '08213494745', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(46, 'Guru 46', '0000000046', 'guru46@gmail.com', '$2y$10$hE966ZFHYNC1gAgkDfg76eNQkvmWMuZtHluPwc2iHPnKPkeLstd3G', '08213431872', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(47, 'Guru 47', '0000000047', 'guru47@gmail.com', '$2y$10$YKiZ34C4fDMubeQFBvMMteyi4CTilGz4Rz23zB9RZQ0NURefpqclC', '08213412980', '', '2021-10-08 08:19:42', '2021-10-08 08:19:42'),
-(48, 'Guru 48', '0000000048', 'guru48@gmail.com', '$2y$10$FNwtnLKnwyqybIvTQQNsTexd4IfvvfMQow0/lxN2FrhzazkZ8S4ju', '08213429700', '', '2021-10-08 08:19:43', '2021-10-08 08:19:43'),
-(49, 'Guru 49', '0000000049', 'guru49@gmail.com', '$2y$10$3mNB35ml7WPfaC/wuxIImOAcIh9vVcVYcfZEr3uJ4D/jUmrWw0JuC', '08213465347', '', '2021-10-08 08:19:43', '2021-10-08 08:19:43'),
-(50, 'Guru 50', '0000000050', 'guru50@gmail.com', '$2y$10$K7qpK5HUbgTgtU6N/SNLYu62qcBfMtgSYNwKpbKFj4O6ZRcyp86pS', '08213439956', '', '2021-10-08 08:19:43', '2021-10-08 08:19:43');
+(1, 'Guru 1', '0000000001', 'guru1@gmail.com', '$2y$10$/iC4S4zhq0u8DY5iqBkqC.UQQm0ogSsJGpxLKZvuRZ2hrAbcTpP3u', '08213495663', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(2, 'Guru 2', '0000000002', 'guru2@gmail.com', '$2y$10$VOiPbcUOYdQwI5Hc5TRytuUX2UokGPSHSZZoWEDF/DbVpqd6fxJye', '08213417027', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(3, 'Guru 3', '0000000003', 'guru3@gmail.com', '$2y$10$EdMPOl/mp2xf7Q168dRRjul3LuicCdYho3xv32G/N675nKLFAqhMG', '08213453261', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(4, 'Guru 4', '0000000004', 'guru4@gmail.com', '$2y$10$zrnNXwJ/Wuv/PtxtwnnseeRXk/R5TBIlyM6B4Ao7YRy1CvqepHzHy', '08213482158', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(5, 'Guru 5', '0000000005', 'guru5@gmail.com', '$2y$10$yHW.kAoSy2znS.xX9q0pOO.qyAMDNkjM9sSfJUzyJyNJj0Sbfs8KC', '08213480973', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(6, 'Guru 6', '0000000006', 'guru6@gmail.com', '$2y$10$solu3cP6ck.3DhLF/k6mYeSW78FosWqfpM8L8as0RsQRCiaQ.9Qzy', '08213464690', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(7, 'Guru 7', '0000000007', 'guru7@gmail.com', '$2y$10$uUNtl0H6OrPlqfwXQwH/PeKQtFFBnnlExHfnw/y3KSU7DzBtyrWge', '08213474727', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(8, 'Guru 8', '0000000008', 'guru8@gmail.com', '$2y$10$vSXNjwvZA.LQlSJyMv2RPudJ5mmd5h4Bz/DBzsYy6UMcYvxHFzKcy', '08213491038', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(9, 'Guru 9', '0000000009', 'guru9@gmail.com', '$2y$10$vsHtRkeOS/zGF11.G3PN/OeRztrrzETti9vQy33SQPuz4kIxeUlzW', '08213423555', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(10, 'Guru 10', '0000000010', 'guru10@gmail.com', '$2y$10$ydvVUWEyyXnmgRxpd23FQO2cUuqwkq8vY3FwFiey/L620cX7uhyM2', '08213443348', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(11, 'Guru 11', '0000000011', 'guru11@gmail.com', '$2y$10$hdeDPBSjl4x4SQ6iLXI9BOeppwE/QpmHmZoriWC0nbquzGT6WPOCW', '08213420971', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(12, 'Guru 12', '0000000012', 'guru12@gmail.com', '$2y$10$56Kb0wPFXxz153T/kutGc.tW.L7AV5X2xhyO/dwIABAjk5SE/Hstq', '08213459794', '', '2021-11-19 01:43:53', '2021-11-19 01:43:53'),
+(13, 'Guru 13', '0000000013', 'guru13@gmail.com', '$2y$10$6/z0e6BzH2fg2m9bqPgKjexfRFraTR2IMOw9rdMMGrdJO3km5NelC', '08213462941', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(14, 'Guru 14', '0000000014', 'guru14@gmail.com', '$2y$10$k5RZtrkhXaaTKnnAEInF3eFF/6XUgE9Co8dr1esHr03VCr0UvS9H6', '08213486094', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(15, 'Guru 15', '0000000015', 'guru15@gmail.com', '$2y$10$Pk5T2hh9D9Y8ipZaChsmS.gOO7GRA.XUZAUTuTAC3wUwSqzPq2hUW', '08213416030', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(16, 'Guru 16', '0000000016', 'guru16@gmail.com', '$2y$10$QSnoW78TRo3Mzgl72UjnoeyGiwPUUfCbFu0vuhyT5IRD86pLorOTi', '08213466167', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(17, 'Guru 17', '0000000017', 'guru17@gmail.com', '$2y$10$RQL8GAbv7cyy4ZcJUUZCfuBM89q4MoL7aRsgIboz5/BHa2cfw0Pmi', '08213417165', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(18, 'Guru 18', '0000000018', 'guru18@gmail.com', '$2y$10$qG5LkAZis67csw/4ZpooDOLqTIccZQYayX645cBCZVI7ZrBzMZvLe', '08213475409', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(19, 'Guru 19', '0000000019', 'guru19@gmail.com', '$2y$10$9AfrVsi8nuqwKgmeFWYW8.zhERrmKBRx5kSLffAvo.o5HvEYaiFEW', '08213485651', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(20, 'Guru 20', '0000000020', 'guru20@gmail.com', '$2y$10$OpDwrRCr9ae4aE21N/Ky9.9W1fxZs9O.qXFQi7XKj3j3X7ZDnnRme', '08213455925', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(21, 'Guru 21', '0000000021', 'guru21@gmail.com', '$2y$10$wHifTyxLj1Yhtal8QQNK8.9zIvvb7sMt5IlNevzZvlvsKODI1Nvna', '08213469132', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(22, 'Guru 22', '0000000022', 'guru22@gmail.com', '$2y$10$.cY5lZPLav5V9NkQIaXssuySaD6LO/BEDmbljttLhSLaV8BrFK4BO', '08213474770', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(23, 'Guru 23', '0000000023', 'guru23@gmail.com', '$2y$10$a3PAGf9n7ped2VUYeYQvYe8hovvE3VB2sS89vEhf424pHcCqlOxvq', '08213419859', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(24, 'Guru 24', '0000000024', 'guru24@gmail.com', '$2y$10$6QJ8KDXgoh0DHMNjHpi8o.CqrcgLqNlOjqT8Uxg.mSOv17Piun3We', '08213460688', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(25, 'Guru 25', '0000000025', 'guru25@gmail.com', '$2y$10$UjpCenY3/8jv52K2V.rEj.logPXbFmTqZ0gaicNZ9aT2NhnfVGnDS', '08213466279', '', '2021-11-19 01:43:54', '2021-11-19 01:43:54'),
+(26, 'Guru 26', '0000000026', 'guru26@gmail.com', '$2y$10$3hgQjysJ1LkEr6SnjBUo0uUuqDRySl/IMUjREuKjuFo3RSPJL2dd.', '08213418459', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(27, 'Guru 27', '0000000027', 'guru27@gmail.com', '$2y$10$vFGaK/Iyn0pGtD9XqygeVuaCJadQlUvqsDz/PTwZFJPvuAU0GE43m', '08213426816', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(28, 'Guru 28', '0000000028', 'guru28@gmail.com', '$2y$10$Kp.09KqvvuzLeMVSflYuPu4bShvlplpPoYzi9rDf3dkDXv45pD84O', '08213439479', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(29, 'Guru 29', '0000000029', 'guru29@gmail.com', '$2y$10$Lhxrpy3/k3cTPR0bSYRWCuw8Da0QwJNNECP9b39BB1GxUNmrEV9ZS', '08213472254', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(30, 'Guru 30', '0000000030', 'guru30@gmail.com', '$2y$10$Uls5TEv9y9s/vPjKjvdVieAG1.j9yFIOtMcrOoAaVkRP9g5RkGse2', '08213462437', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(31, 'Guru 31', '0000000031', 'guru31@gmail.com', '$2y$10$yKfXO4ipISLS8TmMIM5drex.rcuC0M4Ox2rqyEc7UMzdxsg19TqKu', '08213450282', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(32, 'Guru 32', '0000000032', 'guru32@gmail.com', '$2y$10$6ZLzpU10twOAcAotcd5Mi.vp3c8gwVTb60lNF0jviLnSW0WlELcJe', '08213435591', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(33, 'Guru 33', '0000000033', 'guru33@gmail.com', '$2y$10$9u9FlnCqVxqUylRL3UsOr.P8.ZLL3DdC1Si6/ZVk3agxKe1B500Z.', '08213427417', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(34, 'Guru 34', '0000000034', 'guru34@gmail.com', '$2y$10$rw2kuDCO3WQYZQ8F5CnukekfUTCbZjZ6ie4yQA6kX5kiPlTX7bcei', '08213447089', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(35, 'Guru 35', '0000000035', 'guru35@gmail.com', '$2y$10$b/VDmgwdB13QmgEb9yMt8u3/TnJJFiA98Rza3sl2Z0pbqY8ve/yp2', '08213414473', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(36, 'Guru 36', '0000000036', 'guru36@gmail.com', '$2y$10$5r74lnqBH0.rZvxvKRQnCO4sfT0FhS4I4crz85YuVY6ZhM3sf8N4e', '08213424998', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(37, 'Guru 37', '0000000037', 'guru37@gmail.com', '$2y$10$yBj8aMoQOmAZEwAGEhKXY.Np9qyKNRcDFTHBUimqas5E0/xFd3Hkm', '08213499320', '', '2021-11-19 01:43:55', '2021-11-19 01:43:55'),
+(38, 'Guru 38', '0000000038', 'guru38@gmail.com', '$2y$10$wucHiOk7EIniXBIkRWpYDecMsN5tk9KyfaESlqiiVPwUFDqsaI7l6', '08213486255', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(39, 'Guru 39', '0000000039', 'guru39@gmail.com', '$2y$10$On5SPzyfEeTvhEsxqj7At.77/.e1tZ4q9u8z/fTOr/udMrKrDQClq', '08213497667', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(40, 'Guru 40', '0000000040', 'guru40@gmail.com', '$2y$10$ACMQlSbg4wvVIXZ/7ZvdYOAzn7rbx3V8KVTc/0iZ9L8CD1r1cdpgy', '08213473665', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(41, 'Guru 41', '0000000041', 'guru41@gmail.com', '$2y$10$eYX1tS.g8kOh0gdqsE1ETekMHwLlvhNJj5Yp7Gz0MxaFp8WrGojXq', '08213432065', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(42, 'Guru 42', '0000000042', 'guru42@gmail.com', '$2y$10$ftpICmyh2HzfWiKTRdIVm.i/8tqIcttUa6i9O7vXCcqr/poxInIeu', '08213462830', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(43, 'Guru 43', '0000000043', 'guru43@gmail.com', '$2y$10$55QwtDcLpC4N6SUg0M7Jle/hwfWgiD.eer5X0Mmlx7L74CPeAH4K.', '08213437804', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(44, 'Guru 44', '0000000044', 'guru44@gmail.com', '$2y$10$vVQGuLdVdS.4iv.C0z.spOuCLeWu6CC3ZCECHmNMWPGJn802Cqgay', '08213462764', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(45, 'Guru 45', '0000000045', 'guru45@gmail.com', '$2y$10$ScY2FKNSfkLEzgqaxFhTkuehyOwaXwdrBI3ln4LTlWuETrOcZPTEi', '08213499556', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(46, 'Guru 46', '0000000046', 'guru46@gmail.com', '$2y$10$mgPtmdIhamSo9cOIr5YDKenYphnW7Z2eqVMlwjh5yxbRhcgYpnzUa', '08213434723', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(47, 'Guru 47', '0000000047', 'guru47@gmail.com', '$2y$10$SyY6SAz.ih1KAe7OmeYm6OK5.uHDC4uwvhsfnEhl0YizQtypV0eoS', '08213490322', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(48, 'Guru 48', '0000000048', 'guru48@gmail.com', '$2y$10$EiZ8kviMIWm7Wh9csQZXI.W9q9lF4YenGpnQos4on7ssuxdT.ZIh6', '08213484993', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(49, 'Guru 49', '0000000049', 'guru49@gmail.com', '$2y$10$EwZH1YQf6SzltB7hEBbfvOfk.FvScI3OxpBlhsYyYS8NEydpZhy3y', '08213450984', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56'),
+(50, 'Guru 50', '0000000050', 'guru50@gmail.com', '$2y$10$mejSbbIVW70mYSVUooOLfu20bam7VlyTNlNRmkbDCt/f0bi7jWnI.', '08213499059', '', '2021-11-19 01:43:56', '2021-11-19 01:43:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `data_templateSK`
+--
+
+CREATE TABLE `data_templateSK` (
+`id` int(11) NOT NULL,
+`nomor` varchar(100) NOT NULL,
+`dasarSurat` text NOT NULL,
+`nomorSurat` varchar(100) NOT NULL,
+`tanggalSurat` varchar(50) NOT NULL,
+`perihal` text NOT NULL,
+`ditugaskan` text NOT NULL,
+`hari` varchar(100) NOT NULL,
+`tanggal` varchar(100) NOT NULL,
+`waktu` varchar(50) NOT NULL,
+`tempat` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `data_templateSK`
+--
+
+INSERT INTO `data_templateSK` (`id`, `nomor`, `dasarSurat`, `nomorSurat`, `tanggalSurat`, `perihal`, `ditugaskan`, `hari`, `tanggal`, `waktu`, `tempat`) VALUES
+(1, 'Nomor : 421.3/ /SMA-JRG/2021', 'Surat Kepala Disdikbud Kab. Tanah Laut', '890/6090/Disdikbud/2021', '17 November 2021', 'Calon Peserta Kegiatan Fasilitas Karya Nyata Guru Penggerak Kab. Tanah Laut', '<p>Kepala SMA Negeri 1 Jorong memberikan tugas kepada :</p>
+<figure class=\"table\">
+    <table>
+        <tbody>
+            <tr>
+                <td>No</td>
+                <td>Nama</td>
+                <td>Jabatan</td>
+                <td>Unit Kerja</td>
+                <td>Keterangan</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Alvian Septyayuwandianto</td>
+                <td>Guru PJOK</td>
+                <td>SMA Negeri 1 Jorong</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+</figure>
+<p>Untuk mengikuti Kegiatan Fasilitas Karya Nyata Guru Penggerak Kabupaten Tanah Laut pada :</p>', 'Senin s.d Kamis', '22 s.d 25 November 2021', '08.00 Wita', 'Sinar Hotel Pelaihari');
 
 -- --------------------------------------------------------
 
@@ -1083,6 +1155,12 @@ ALTER TABLE `data_days`
 ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `data_instansi`
+--
+ALTER TABLE `data_instansi`
+ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `data_logs_login`
 --
 ALTER TABLE `data_logs_login`
@@ -1115,6 +1193,12 @@ ADD PRIMARY KEY (`id`),
 ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `data_templateSK`
+--
+ALTER TABLE `data_templateSK`
+ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `data_timing`
 --
 ALTER TABLE `data_timing`
@@ -1140,13 +1224,19 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 -- AUTO_INCREMENT for table `data_classes`
 --
 ALTER TABLE `data_classes`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `data_days`
 --
 ALTER TABLE `data_days`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `data_instansi`
+--
+ALTER TABLE `data_instansi`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `data_logs_login`
@@ -1177,6 +1267,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 ALTER TABLE `data_teachers`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT for table `data_templateSK`
+--
+ALTER TABLE `data_templateSK`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `data_timing`

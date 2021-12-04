@@ -45,6 +45,7 @@ $sub1 = $this->uri->segment(2);; ?>
                                 <li class="nav-item dropdown dropdown-submenu">
                                     <a class="nav-link dropdown-toggle test" href="#"> <i class="fas fa-book-open me-2"></i> Template <span class="caret"></span></a>
                                     <ul class="dropdown-menu bg-success noborder">
+                                        <li><a class="dropdown-item" href="<?= base_url('pageAdmin/kopSurat'); ?>"><i class="fas fa-home me-2"></i>Kop Surat</a></li>
                                         <li><a class="dropdown-item" href="<?= base_url('pageAdmin/tempST'); ?>"><i class="fas fa-tasks me-2"></i>Surat Tugas</a></li>
                                         <li><a class="dropdown-item" href="<?= base_url('pageAdmin/tempSP'); ?>"><i class="fas fa-book-reader me-2"></i> Surat Permohonan</a></li>
                                         <li><a class="dropdown-item" href="<?= base_url('pageAdmin/tempSKet'); ?>"><i class="fab fa-buysellads me-2"></i>Surat Keterangan</a></li>

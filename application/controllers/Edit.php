@@ -172,6 +172,50 @@ class Edit extends CI_Controller
             redirect('pageAdmin/instansi', 'refresh');
         }
     }
+
+    function kopSatu()
+    {
+
+        $line1 = $this->input->post('line1', true);
+        $line2 = $this->input->post('line2', true);
+        $line3 = $this->input->post('line3', true);
+        $line4 = $this->input->post('line4', true);
+        $line5 = $this->input->post('line5', true);
+        $line6 = $this->input->post('line6', true);
+
+        $this->load->model('modelInsert');
+        $update = $this->modelInsert->kopSatu($line1, $line2, $line3, $line4, $line5, $line6);
+
+        if ($update == 1) {
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Data berhasil diubah');
+            redirect('pageAdmin/kopSurat', 'refresh');
+        } else {
+            $this->session->set_flashdata('tipe', 'error');
+            $this->session->set_flashdata('pesan', 'Data gagal diubah');
+            redirect('pageAdmin/kopSurat', 'refresh');
+        }
+    }
+
+    function logoKopSatu()
+    {
+        $this->load->model('modelInsert');
+        $ubah = $this->modelInsert->logoKopSatu();
+
+        if ($ubah == 1) {
+            $this->session->set_flashdata('tipe', 'success');
+            $this->session->set_flashdata('pesan', 'Logo berhasil diubah');
+            redirect('pageAdmin/kopSurat', 'refresh');
+        } elseif ($ubah == 2) {
+            $this->session->set_flashdata('tipe', 'error');
+            $this->session->set_flashdata('pesan', 'Logo gagal diubah');
+            redirect('pageAdmin/kopSurat', 'refresh');
+        } else {
+            $this->session->set_flashdata('tipe', 'error');
+            $this->session->set_flashdata('pesan', $ubah);
+            redirect('pageAdmin/kopSurat', 'refresh');
+        }
+    }
 }
 
 /* End of file Edit.php */

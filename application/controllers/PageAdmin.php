@@ -173,6 +173,17 @@ class PageAdmin extends CI_Controller
         $this->load->view('admin/footer');
     }
 
+    public function kopSurat()
+    {
+        is_admin();
+        $data['kop1'] = $this->db->get_where('data_kopSurat', ['id' => 1])->row();
+
+        $this->load->view('admin/meta', $data);
+        $this->load->view('admin/nav');
+        $this->load->view('admin/kopSurat');
+        $this->load->view('admin/footer');
+    }
+
     public function tempST()
     {
         is_admin();

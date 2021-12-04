@@ -84,7 +84,7 @@
                         <br><br>
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-success" type="submit">Simpan</button>
-                            <a href="" onclick="return confirm('Pastikan sudah klik simpan sebelum mencetak')" class="btn btn-primary bottom-0 end-0">Cetak</a>
+                            <a href="<?= base_url('cetak/stSatu'); ?>" target="_blank" onclick="return confirm('Pastikan sudah klik simpan sebelum mencetak')" class="btn btn-primary bottom-0 end-0">Cetak</a>
 
                         </div>
                     </form>

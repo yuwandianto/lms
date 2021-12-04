@@ -316,6 +316,53 @@ class ModelInsert extends CI_Model
             return 0;
         }
     }
+
+    function kopSatu($line1, $line2, $line3, $line4, $line5, $line6)
+    {
+        $data = [
+            'line1' => $line1,
+            'line2' => $line2,
+            'line3' => $line3,
+            'line4' => $line4,
+            'line5' => $line5,
+            'line6' => $line6,
+        ];
+        $this->db->where('id', 1);
+        $update = $this->db->update('data_kopSurat', $data);
+        if ($update) {
+            return 1;
+        }
+        return 0;
+    }
+
+    function logoKopSatu()
+    {
+
+        $config['upload_path'] = './assets/images/logo';
+        $config['allowed_types'] = 'gif|jpg|png|GIF|JPG|PNG';
+        $config['max_size']  = '5000';
+        $config['min_size']  = '20';
+        $config['encrypt_name'] = true;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('file')) {
+            $error = $this->upload->display_errors();
+            return $error;
+        } else {
+            $data = array('upload_data' => $this->upload->data());
+            echo "success";
+            $object = [
+                'logoKop' => $this->upload->data('file_name'),
+            ];
+            $this->db->where('id', 1);
+            $ubah_nama = $this->db->update('data_kopSurat', $object);
+            if ($ubah_nama) {
+                return 1;
+            }
+            return 0;
+        }
+    }
 }
 
 /* End of file ModelInsert.php */
